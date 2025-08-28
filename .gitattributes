@@ -1,0 +1,8 @@
+*.dart linguist-language=Dart
+*.g.dart linguist-generated=true
+*.freezed.dart linguist-generated=true
+android/** linguist-vendored
+ios/** linguist-vendored
+macos/** linguist-vendored
+linux/** linguist-vendored
+windows/** linguist-vendored
