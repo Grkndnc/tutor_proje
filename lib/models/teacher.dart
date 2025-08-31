@@ -8,6 +8,8 @@ class Teacher {
   final String education;
   final String experience;
   final String location;
+  final String email;
+  final String phone;
   final List<String> secondarySubjects;
 
   Teacher({
@@ -20,6 +22,8 @@ class Teacher {
     required this.education,
     required this.experience,
     required this.location,
+    required this.email,
+    required this.phone,
     required this.secondarySubjects,
   });
 
@@ -35,6 +39,8 @@ class Teacher {
       education: json['education'] ?? '',
       experience: json['experience'] ?? '',
       location: json['location'] ?? '',
+      email: json['email'] ?? '',
+      phone: json['phone'] ?? '',
       secondarySubjects: List<String>.from(json['secondarySubjects'] ?? []),
     );
   }
@@ -51,6 +57,8 @@ class Teacher {
       'education': education,
       'experience': experience,
       'location': location,
+      'email': email,
+      'phone': phone,
       'secondarySubjects': secondarySubjects,
     };
   }
@@ -66,6 +74,8 @@ class Teacher {
     String? education,
     String? experience,
     String? location,
+    String? email,
+    String? phone,
     List<String>? secondarySubjects,
   }) {
     return Teacher(
@@ -78,6 +88,8 @@ class Teacher {
       education: education ?? this.education,
       experience: experience ?? this.experience,
       location: location ?? this.location,
+      email: email ?? this.email,
+      phone: phone ?? this.phone,
       secondarySubjects: secondarySubjects ?? this.secondarySubjects,
     );
   }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 import 'package:tutorapp_deneme/components/info_card.dart';
+import 'package:tutorapp_deneme/components/my_second_button.dart';
+import 'package:tutorapp_deneme/components/my_second_teacher_card.dart';
 import 'package:tutorapp_deneme/models/teacher.dart';
 import 'package:tutorapp_deneme/pages/book_appointment_page.dart';
-import 'package:tutorapp_deneme/providers/teachers_provider.dart';
 
 class TutorResumePage extends StatefulWidget {
   final Teacher? teacher;
@@ -37,6 +37,8 @@ class _TutorResumePageState extends State<TutorResumePage> {
           education: 'ODTÜ Matematik, Yüksek Lisans - Eğitim Bilimleri',
           experience: '7 yıl özel ders deneyimi',
           location: 'İstanbul / Online',
+          email: 'gurkan.dinc@email.com',
+          phone: '+90 555 123 45 67',
           secondarySubjects: [
             'Fizik',
             'Biyoloji',
@@ -77,160 +79,23 @@ class _TutorResumePageState extends State<TutorResumePage> {
             padding: EdgeInsets.all(12),
             child: SingleChildScrollView(
               child: Column(
-                //mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    width: 0.97.sw,
-                    height: 0.24.sh,
-                    child: Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(18.r),
-                            color: Theme.of(context).colorScheme.surface),
-                        child: Padding(
-                          padding: EdgeInsets.all(8),
-                          child: Column(
-                            children: [
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    width: 0.35.sw,
-                                    height: 0.13.sh,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                          width: 1.w,
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .secondary),
-                                      borderRadius: BorderRadius.circular(22),
-                                      shape: BoxShape.rectangle,
-                                      image: DecorationImage(
-                                          image:
-                                              AssetImage(currentTeacher.image),
-                                          fit: BoxFit.fill),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.only(left: 15.r, top: 15.r),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          currentTeacher.name,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headlineMedium,
-                                        ),
-                                        SizedBox(
-                                          height: 12.r,
-                                        ),
-                                        Column(
-                                          children: [
-                                            Text(
-                                                overflow: TextOverflow.ellipsis,
-                                                "Ana Branş",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleMedium),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            Text(
-                                                overflow: TextOverflow.ellipsis,
-                                                currentTeacher.subject,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleSmall),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Row(
-                                      children: [
-                                        IconButton(
-                                          onPressed: () {},
-                                          icon: Icon(
-                                            Icons.share_outlined,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .secondary,
-                                          ),
-                                        ),
-                                        Consumer<TeachersProvider>(
-                                          builder: (context, provider, child) {
-                                            final isFavorite = provider
-                                                .isFavorite(currentTeacher.id);
-                                            return IconButton(
-                                              onPressed: () {
-                                                provider.toggleFavorite(
-                                                    currentTeacher);
-                                                _showSnackBar(
-                                                    context, isFavorite);
-                                              },
-                                              icon: Icon(
-                                                isFavorite
-                                                    ? Icons.bookmark
-                                                    : Icons.bookmark_border,
-                                                color: isFavorite
-                                                    ? Theme.of(context)
-                                                        .colorScheme
-                                                        .secondary
-                                                    : Theme.of(context)
-                                                        .colorScheme
-                                                        .secondary,
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(height: 10.r),
-                                  Text(
-                                    "Yan Branşlar", // ilk branş
-                                    style:
-                                        Theme.of(context).textTheme.titleSmall,
-                                  ),
-                                  SizedBox(height: 5.r),
-                                  Wrap(
-                                    spacing: 5, // yan boşluk
-                                    runSpacing: 1, // alt boşluk
-                                    children: currentTeacher.secondarySubjects
-                                        .map((subject) => Text("$subject,"))
-                                        .toList(),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                  // Yeni MySecondTeacherCard component'i
+                  MySecondTeacherCard(
+                    teacher: currentTeacher,
+                    onTap: () {
+                      // Kart'a tıklandığında yapılacak işlem
+                    },
                   ),
-                  SizedBox(
-                    height: 10.h,
-                  ),
+
+                  SizedBox(height: 20.h),
+
                   Text(
                     "Hakkında",
                     style: Theme.of(context).textTheme.displayMedium,
                   ),
-                  SizedBox(
-                    height: 5.h,
-                  ),
+                  SizedBox(height: 5.h),
                   Text(
                     "Bu öğretmen hakkında uzun açıklama buraya gelecek... ",
                     style: Theme.of(context).textTheme.bodyMedium,
@@ -287,82 +152,24 @@ class _TutorResumePageState extends State<TutorResumePage> {
                   ),
                   SizedBox(height: 20.h),
                   // Randevu Al Butonu
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.r),
-                    child: SizedBox(
-                      width: double.infinity,
-                      height: 56.h,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => BookAppointmentPage(
-                                teacher: currentTeacher,
-                              ),
-                            ),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              Theme.of(context).colorScheme.surface,
-                          foregroundColor:
-                              Theme.of(context).colorScheme.secondary,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16.r),
+                  MySecondButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BookAppointmentPage(
+                            teacher: currentTeacher,
                           ),
-                          elevation: 5,
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.calendar_today,
-                              size: 20.sp,
-                              color: Theme.of(context).colorScheme.secondary,
-                            ),
-                            SizedBox(width: 8.w),
-                            Text("Randevu Al",
-                                style: Theme.of(context).textTheme.titleMedium),
-                          ],
-                        ),
-                      ),
-                    ),
+                      );
+                    },
+                    text: "Randevu Al",
+                    icon: Icons.calendar_month,
                   ),
                 ],
               ),
             ),
           ),
-        ),
-      ),
-    );
-  }
-
-  void _showSnackBar(BuildContext context, bool wasFavorite) {
-    final provider = Provider.of<TeachersProvider>(context, listen: false);
-    final isNowFavorite = provider.isFavorite(currentTeacher.id);
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          isNowFavorite
-              ? "Öğretmen favorilere eklendi"
-              : "Öğretmen favorilerden çıkarıldı",
-          style: Theme.of(context)
-              .textTheme
-              .bodyMedium
-              ?.copyWith(color: Colors.white),
-        ),
-        backgroundColor: Theme.of(context).colorScheme.secondary,
-        duration: Duration(seconds: 2),
-        action: SnackBarAction(
-          label: isNowFavorite ? "Favorileri Görüntüle" : "Tamam",
-          textColor: Colors.white,
-          onPressed: () {
-            if (isNowFavorite) {
-              Navigator.pushNamed(context, '/my-favorite-teachers');
-            }
-          },
         ),
       ),
     );

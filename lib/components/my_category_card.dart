@@ -6,60 +6,77 @@ class MyCategoryCard extends StatefulWidget {
     super.key,
     required this.myimage,
     required this.name,
+    this.isSelected = false,
+    this.onTap,
   });
   final ImageProvider<Object> myimage;
   final String name;
+  final bool isSelected;
+  final VoidCallback? onTap;
 
   @override
   State<MyCategoryCard> createState() => _MyCategoryCardState();
 }
 
 class _MyCategoryCardState extends State<MyCategoryCard> {
-  String? selectedRole;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Stack(
-          alignment: Alignment.topRight,
-          children: [
-            Container(
-              margin: EdgeInsets.all(7.r),
-              width: 0.2.sw,
-              height: 0.07.sh,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.contain,
-                  image: widget.myimage,
+    return GestureDetector(
+      onTap: widget.onTap,
+      child: Column(
+        children: [
+          Stack(
+            alignment: Alignment.topRight,
+            children: [
+              Container(
+                margin: EdgeInsets.all(7.r),
+                width: 0.2.sw,
+                height: 0.07.sh,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    fit: BoxFit.contain,
+                    image: widget.myimage,
+                  ),
                 ),
               ),
-            ),
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  selectedRole = "teacher";
-                });
-              },
-              child: Container(
+              // Seçim göstergesi - boş daire veya tik ikonu
+              Container(
                 width: 0.06.sw,
                 height: 0.04.sh,
                 decoration: BoxDecoration(
                   border: Border.all(
-                    width: 4.w,
-                    color: Theme.of(context).colorScheme.secondary,
+                    width: 2.w,
+                    color: widget.isSelected
+                        ? Colors.white
+                        : Theme.of(context).colorScheme.secondary,
                   ),
                   shape: BoxShape.circle,
-                  color: selectedRole == "teacher"
-                      ? Theme.of(context).colorScheme.surface
-                      : Theme.of(context).colorScheme.primary,
+                  color: widget.isSelected
+                      ? Theme.of(context).colorScheme.secondary
+                      : Colors.transparent,
                 ),
+                child: widget.isSelected
+                    ? Icon(
+                        Icons.check,
+                        color: Colors.white,
+                        size: 16.sp,
+                      )
+                    : null,
               ),
-            ),
-          ],
-        ),
-        Text(widget.name,
-            style: Theme.of(context).textTheme.headlineSmall),
-      ],
+            ],
+          ),
+          Text(
+            widget.name,
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  color: widget.isSelected
+                      ? Theme.of(context).colorScheme.secondary
+                      : Theme.of(context).colorScheme.onSurface,
+                  fontWeight:
+                      widget.isSelected ? FontWeight.bold : FontWeight.normal,
+                ),
+          ),
+        ],
+      ),
     );
   }
 }

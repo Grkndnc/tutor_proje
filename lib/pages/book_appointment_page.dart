@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:tutorapp_deneme/components/my_second_button.dart';
 import 'package:tutorapp_deneme/models/teacher.dart';
 
-// ignore: must_be_immutable
 class BookAppointmentPage extends StatefulWidget {
-  Teacher? teacher;
-  BookAppointmentPage({super.key, this.teacher});
+  final Teacher? teacher;
+
+  const BookAppointmentPage({super.key, this.teacher});
 
   @override
   State<BookAppointmentPage> createState() => _BookAppointmentPageState();
@@ -43,6 +43,8 @@ class _BookAppointmentPageState extends State<BookAppointmentPage> {
           education: 'ODTÜ Matematik, Yüksek Lisans - Eğitim Bilimleri',
           experience: '7 yıl özel ders deneyimi',
           location: 'İstanbul / Online',
+          email: 'gurkan.dinc@email.com',
+          phone: '+90 555 123 45 67',
           secondarySubjects: [
             'Fizik',
             'Biyoloji',
@@ -170,7 +172,6 @@ class _BookAppointmentPageState extends State<BookAppointmentPage> {
                           style: TextButton.styleFrom(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 16.w, vertical: 8.h),
-                            // minimumSize: Size.zero,
                           ),
                           child: Text(
                             "Seç",
@@ -233,7 +234,6 @@ class _BookAppointmentPageState extends State<BookAppointmentPage> {
                           style: TextButton.styleFrom(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 16.w, vertical: 8.h),
-                            // minimumSize: Size.zero,
                           ),
                           child: Text(
                             "Seç",
@@ -327,38 +327,10 @@ class _BookAppointmentPageState extends State<BookAppointmentPage> {
                 SizedBox(height: 32.h),
 
                 // Randevu Onaylama Butonu
-                Padding(
-                  padding: EdgeInsets.all(5),
-                  child: SizedBox(
-                    height: 56.h,
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed:
-                          _canBookAppointment() ? _bookAppointment : null,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Theme.of(context).colorScheme.primary,
-                        // foregroundColor: Theme.of(context).colorScheme.primary,
-                        //shadowColor: Colors.transparent,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16.r),
-                        ),
-                        elevation: 4,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.check_circle_outline_outlined,
-                            size: 20.sp,
-                            color: Theme.of(context).colorScheme.secondary,
-                          ),
-                          SizedBox(width: 8.w),
-                          Text("Randevu Onayla",
-                              style: Theme.of(context).textTheme.titleMedium),
-                        ],
-                      ),
-                    ),
-                  ),
+                MySecondButton(
+                  onPressed: _canBookAppointment() ? _bookAppointment : null,
+                  text: "Randevu Onayı",
+                  icon: Icons.check_circle_outline,
                 ),
 
                 SizedBox(height: 16.h),

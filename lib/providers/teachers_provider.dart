@@ -17,6 +17,8 @@ class TeachersProvider with ChangeNotifier {
       education: 'ODTÜ Matematik, Yüksek Lisans - Eğitim Bilimleri',
       experience: '7 yıl özel ders deneyimi',
       location: 'İstanbul / Online',
+      email: 'gurkan.dinc@email.com',
+      phone: '+90 555 123 45 67',
       secondarySubjects: [
         'Fizik',
         'Biyoloji',
@@ -37,6 +39,8 @@ class TeachersProvider with ChangeNotifier {
       education: 'İTÜ Fizik Mühendisliği',
       experience: '5 yıl özel ders deneyimi',
       location: 'Ankara / Online',
+      email: 'ayse.yilmaz@email.com',
+      phone: '+90 555 987 65 43',
       secondarySubjects: ['Matematik', 'Kimya'],
     ),
     Teacher(
@@ -49,6 +53,8 @@ class TeachersProvider with ChangeNotifier {
       education: 'Hacettepe Üniversitesi Kimya',
       experience: '3 yıl özel ders deneyimi',
       location: 'İzmir / Online',
+      email: 'mehmet.kaya@email.com',
+      phone: '+90 555 456 78 90',
       secondarySubjects: ['Biyoloji', 'Fizik'],
     ),
   ];

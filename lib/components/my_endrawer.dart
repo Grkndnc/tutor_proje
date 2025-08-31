@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:tutorapp_deneme/components/my_list_tile.dart';
 import 'package:tutorapp_deneme/providers/teachers_provider.dart';
+import 'package:tutorapp_deneme/providers/student_provider.dart';
 
 class MyEndDrawer extends StatelessWidget {
   const MyEndDrawer({super.key});
@@ -20,36 +21,40 @@ class MyEndDrawer extends StatelessWidget {
                 decoration: BoxDecoration(
                   border: Border(bottom: BorderSide.none),
                 ),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(30).r,
-                      child: Column(
-                        children: [
-                          Text(
-                            "Hoşgeldin !",
-                            style: Theme.of(context).textTheme.headlineMedium,
+                child: Consumer<StudentProvider>(
+                  builder: (context, studentProvider, child) {
+                    final student = studentProvider.currentStudent;
+                    return Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(30).r,
+                          child: Column(
+                            children: [
+                              Text(
+                                "Hoşgeldin !",
+                                style: Theme.of(context).textTheme.headlineMedium,
+                              ),
+                              SizedBox(
+                                height: 15.h,
+                              ),
+                              Text(
+                                student?.fullName ?? "Öğrenci",
+                                style: Theme.of(context).textTheme.headlineSmall,
+                              ),
+                            ],
                           ),
-                          SizedBox(
-                            height: 15.h,
-                          ),
-                          Text(
-                            "Gürkan DİNÇ",
-                            style: Theme.of(context).textTheme.headlineSmall,
-                          ),
-                        ],
-                      ),
-                    ),
-                    CircleAvatar(
-                      backgroundColor: Theme.of(context).colorScheme.secondary,
-                      radius: 30.r,
-                      backgroundImage:
-                          AssetImage("images/quantum-computer_12608409.png"),
-                    ),
-                    SizedBox(
-                      width: 15.w,
-                    ),
-                  ],
+                        ),
+                        CircleAvatar(
+                          backgroundColor: Theme.of(context).colorScheme.secondary,
+                          radius: 30.r,
+                          backgroundImage: AssetImage(student?.image ?? "images/student 1.png"),
+                        ),
+                        SizedBox(
+                          width: 15.w,
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ),
               SizedBox(
@@ -58,7 +63,10 @@ class MyEndDrawer extends StatelessWidget {
               MyListTile(
                 text: 'Profilim',
                 icon: Icons.account_circle,
-                onTap: () => Navigator.pop(context),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, '/StudentProfilePage');
+                },
               ),
               MyListTile(
                 text: 'Derslerim',

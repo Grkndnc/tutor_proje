@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-import 'package:tutorapp_deneme/models/teacher.dart';
+import 'package:tutorapp_deneme/components/my_second_teacher_card.dart';
+
+import 'package:tutorapp_deneme/pages/tutor_resume_page.dart';
 import 'package:tutorapp_deneme/providers/teachers_provider.dart';
 
 class MyFavoriteTeachers extends StatefulWidget {
@@ -82,8 +84,19 @@ class _MyFavoriteTeachersState extends State<MyFavoriteTeachers> {
                                 final teacher = favoriteTeachers[index];
                                 return Padding(
                                   padding: EdgeInsets.only(bottom: 16.h),
-                                  child:
-                                      _buildFavoriteTeacherCard(teacher, index),
+                                  child: MySecondTeacherCard(
+                                    teacher: teacher,
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => TutorResumePage(
+                                            teacher: teacher,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
                                 );
                               },
                             ),
@@ -94,131 +107,6 @@ class _MyFavoriteTeachersState extends State<MyFavoriteTeachers> {
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildFavoriteTeacherCard(Teacher teacher, int index) {
-    return Card(
-      color: Colors.white,
-      elevation: 4,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.r),
-      ),
-      child: Container(
-        width: double.infinity,
-        height: 130.h,
-        padding: EdgeInsets.all(16.r),
-        child: Row(
-          children: [
-            // Öğretmen Fotoğrafı
-            CircleAvatar(
-              backgroundColor: Colors.white,
-              radius: 40.r,
-              backgroundImage: AssetImage(teacher.image),
-            ),
-            SizedBox(width: 16.w),
-            // Öğretmen Bilgileri
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    teacher.name,
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  ),
-                  SizedBox(height: 4.h),
-                  Text(
-                    teacher.subject,
-                    style: Theme.of(context).textTheme.titleSmall,
-                  ),
-                  SizedBox(height: 8.h),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.star_rounded,
-                        color: Colors.yellow[600],
-                        size: 20.sp,
-                      ),
-                      SizedBox(width: 4.w),
-                      Text(
-                        teacher.rating,
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
-                      SizedBox(width: 16.w),
-                      Text(
-                        teacher.price,
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            // Butonlar
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                // Profil Git Butonu
-                ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/tutor-resume');
-                  },
-                  icon: Icon(
-                    Icons.person_outline,
-                    size: 16.sp,
-                    color: Colors.white,
-                  ),
-                  label: Text(
-                    "Profil",
-                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).colorScheme.secondary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.r),
-                    ),
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
-                  ),
-                ),
-                // Favorilerden Çıkar Butonu
-                IconButton(
-                  onPressed: () {
-                    _removeFromFavorites(teacher.id);
-                  },
-                  icon: Icon(
-                    Icons.bookmark_remove_rounded,
-                    color: Colors.red,
-                    size: 24.sp,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  void _removeFromFavorites(String teacherId) {
-    final provider = Provider.of<TeachersProvider>(context, listen: false);
-    provider.removeFromFavorites(teacherId);
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          "Öğretmen favorilerden çıkarıldı",
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
-        backgroundColor: Theme.of(context).colorScheme.secondary,
-        duration: Duration(seconds: 3),
       ),
     );
   }
