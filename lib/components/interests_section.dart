@@ -27,14 +27,6 @@ class InterestsSection extends StatelessWidget {
         border: Border.all(
           color: Theme.of(context).colorScheme.outline,
         ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey,
-            spreadRadius: 1,
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

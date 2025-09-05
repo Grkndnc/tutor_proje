@@ -4,7 +4,7 @@ import 'package:tutorapp_deneme/components/info_card.dart';
 import 'package:tutorapp_deneme/components/my_second_button.dart';
 import 'package:tutorapp_deneme/components/my_second_teacher_card.dart';
 import 'package:tutorapp_deneme/models/teacher.dart';
-import 'package:tutorapp_deneme/pages/book_appointment_page.dart';
+import 'package:tutorapp_deneme/pages/studentpages/book_appointment_page.dart';
 
 class TutorResumePage extends StatefulWidget {
   final Teacher? teacher;

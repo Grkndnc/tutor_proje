@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "417146606456",
+    "project_id": "tutorprojecttt",
+    "storage_bucket": "tutorprojecttt.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:417146606456:android:dd560d200308c27598ae8d",
+        "android_client_info": {
+          "package_name": "com.example.tutorapp_deneme"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYDCat8lIMbjhFDzaJXXlubgbM0Cq0YEM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

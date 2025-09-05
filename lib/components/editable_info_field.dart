@@ -36,14 +36,6 @@ class EditableInfoField extends StatelessWidget {
                 : Theme.of(context).colorScheme.outline,
             width: isEditing ? 2 : 1,
           ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey,
-              spreadRadius: 1,
-              blurRadius: 4,
-              offset: const Offset(0, 2),
-            ),
-          ],
         ),
         child: Row(
           children: [

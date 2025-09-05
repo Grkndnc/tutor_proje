@@ -20,7 +20,7 @@ class MyButton extends StatelessWidget {
         height: 0.06.sh,
         width: 0.7.sw,
         child: Padding(
-          padding: EdgeInsets.only(top: 10.r),
+          padding: EdgeInsets.only(top: 18.r),
           child: Text(
             text,
             style: Theme.of(context)

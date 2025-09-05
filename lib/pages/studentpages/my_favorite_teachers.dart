@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'package:tutorapp_deneme/components/my_second_teacher_card.dart';
 
-import 'package:tutorapp_deneme/pages/tutor_resume_page.dart';
+import 'package:tutorapp_deneme/pages/studentpages/tutor_resume_page.dart';
 import 'package:tutorapp_deneme/providers/teachers_provider.dart';
 
 class MyFavoriteTeachers extends StatefulWidget {
@@ -50,7 +50,7 @@ class _MyFavoriteTeachersState extends State<MyFavoriteTeachers> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(
-                              Icons.favorite_border,
+                              Icons.bookmark_border_rounded,
                               size: 80.sp,
                               color: Theme.of(context).colorScheme.secondary,
                             ),

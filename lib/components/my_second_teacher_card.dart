@@ -129,16 +129,6 @@ class _MySecondTeacherCardState extends State<MySecondTeacherCard> {
                   // Sağ taraftaki ikonlar - resimle aynı hizada
                   Column(
                     children: [
-                      IconButton(
-                        onPressed: () {
-                          // Paylaşım fonksiyonu
-                        },
-                        icon: Icon(
-                          Icons.share_outlined,
-                          color: Theme.of(context).colorScheme.secondary,
-                          size: 24.sp,
-                        ),
-                      ),
                       Consumer<TeachersProvider>(
                         builder: (context, provider, child) {
                           final isFavorite =
@@ -157,6 +147,16 @@ class _MySecondTeacherCardState extends State<MySecondTeacherCard> {
                             ),
                           );
                         },
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          // Paylaşım fonksiyonu
+                        },
+                        icon: Icon(
+                          Icons.share_outlined,
+                          color: Theme.of(context).colorScheme.secondary,
+                          size: 24.sp,
+                        ),
                       ),
                     ],
                   ),

@@ -1,23 +1,26 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-
-import 'package:tutorapp_deneme/pages/Intro_page.dart';
+import 'firebase_options.dart';
+import 'package:tutorapp_deneme/pages/commonpages/Intro_page.dart';
 import 'package:tutorapp_deneme/Themes/themes.dart';
-import 'package:tutorapp_deneme/pages/forgot_password_page.dart';
-import 'package:tutorapp_deneme/pages/home_page.dart';
-import 'package:tutorapp_deneme/pages/login_page.dart';
-import 'package:tutorapp_deneme/pages/register_page_student.dart';
-import 'package:tutorapp_deneme/pages/register_page_teacher.dart';
-import 'package:tutorapp_deneme/pages/selection_page.dart';
-import 'package:tutorapp_deneme/pages/tutor_resume_page.dart';
-import 'package:tutorapp_deneme/pages/book_appointment_page.dart';
-import 'package:tutorapp_deneme/pages/my_favorite_teachers.dart';
-import 'package:tutorapp_deneme/pages/student_profile_page.dart';
+import 'package:tutorapp_deneme/pages/commonpages/forgot_password_page.dart';
+import 'package:tutorapp_deneme/pages/studentpages/home_page.dart';
+import 'package:tutorapp_deneme/pages/commonpages/login_page.dart';
+import 'package:tutorapp_deneme/pages/studentpages/register_page_student.dart';
+import 'package:tutorapp_deneme/pages/teacherpages/register_page_teacher.dart';
+import 'package:tutorapp_deneme/pages/commonpages/selection_page.dart';
+import 'package:tutorapp_deneme/pages/studentpages/tutor_resume_page.dart';
+import 'package:tutorapp_deneme/pages/studentpages/book_appointment_page.dart';
+import 'package:tutorapp_deneme/pages/studentpages/my_favorite_teachers.dart';
+import 'package:tutorapp_deneme/pages/studentpages/student_profile_page.dart';
 import 'package:tutorapp_deneme/providers/teachers_provider.dart';
 import 'package:tutorapp_deneme/providers/student_provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
