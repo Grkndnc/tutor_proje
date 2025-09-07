@@ -23,140 +23,136 @@ class _RoleSelectionPageState extends State<RoleSelectionPage> {
           style: Theme.of(context).textTheme.titleLarge,
         ),
       ),
-      body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(height: 30.h),
-              Text("Rolünü Seç",
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineMedium
-                      ?.copyWith(fontSize: 24)),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: 10.h),
+            Text("Rolünü Seç",
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineMedium
+                    ?.copyWith(fontSize: 24)),
 
-              // Öğrenci Kartı
-              Column(
-                children: [
-                  Stack(
-                    alignment: Alignment.topRight,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Container(
-                          width: 0.5.sw,
-                          height: 0.3.sh,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              fit: BoxFit.contain,
-                              image: AssetImage(
-                                "images/student 1.png",
-                              ),
+            // Öğrenci Kartı
+            Column(
+              children: [
+                Stack(
+                  alignment: Alignment.topRight,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Container(
+                        width: 0.5.sw,
+                        height: 0.3.sh,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            fit: BoxFit.contain,
+                            image: AssetImage(
+                              "images/student 1.png",
                             ),
                           ),
+                        ),
 
-                          // öğretmen resmi
+                        // öğretmen resmi
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedRole = "student";
+                        });
+                      },
+                      child: Container(
+                        width: 0.1.sw,
+                        height: 0.1.sh,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 4,
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
+                          shape: BoxShape.circle,
+                          color: selectedRole == "student"
+                              ? Theme.of(context).colorScheme.surface
+                              : Theme.of(context).colorScheme.primary,
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            selectedRole = "student";
-                          });
-                        },
-                        child: Container(
-                          width: 0.1.sw,
-                          height: 0.1.sh,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              width: 4,
-                              color: Theme.of(context).colorScheme.secondary,
+                    ),
+                  ],
+                ),
+                Text("Öğrenci",
+                    style: Theme.of(context).textTheme.headlineSmall),
+              ],
+            ),
+
+            // Öğretmen Kartı
+            Column(
+              children: [
+                Stack(
+                  alignment: Alignment.topRight,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Container(
+                        width: 0.5.sw,
+                        height: 0.3.sh,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            fit: BoxFit.contain,
+                            image: AssetImage(
+                              "images/Teacher 1.png",
                             ),
-                            shape: BoxShape.circle,
-                            color: selectedRole == "student"
-                                ? Theme.of(context).colorScheme.surface
-                                : Theme.of(context).colorScheme.primary,
                           ),
                         ),
+
+                        // öğretmen resmi
                       ),
-                    ],
-                  ),
-                  Text("Öğrenci",
-                      style: Theme.of(context).textTheme.headlineSmall),
-                ],
-              ),
-
-              // Öğretmen Kartı
-              Column(
-                children: [
-                  Stack(
-                    alignment: Alignment.topRight,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Container(
-                          width: 0.5.sw,
-                          height: 0.3.sh,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              fit: BoxFit.contain,
-                              image: AssetImage(
-                                "images/Teacher 1.png",
-                              ),
-                            ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedRole = "teacher";
+                        });
+                      },
+                      child: Container(
+                        width: 0.1.sw,
+                        height: 0.1.sh,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 4.w,
+                            color: Theme.of(context).colorScheme.secondary,
                           ),
-
-                          // öğretmen resmi
+                          shape: BoxShape.circle,
+                          color: selectedRole == "teacher"
+                              ? Theme.of(context).colorScheme.surface
+                              : Theme.of(context).colorScheme.primary,
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            selectedRole = "teacher";
-                          });
-                        },
-                        child: Container(
-                          width: 0.1.sw,
-                          height: 0.1.sh,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              width: 4.w,
-                              color: Theme.of(context).colorScheme.secondary,
-                            ),
-                            shape: BoxShape.circle,
-                            color: selectedRole == "teacher"
-                                ? Theme.of(context).colorScheme.surface
-                                : Theme.of(context).colorScheme.primary,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Text("Öğretmen",
-                      style: Theme.of(context).textTheme.headlineSmall),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+                Text("Öğretmen",
+                    style: Theme.of(context).textTheme.headlineSmall),
+              ],
+            ),
 
-              SizedBox(height: 30.h),
+            SizedBox(height: 20.h),
 
-              MyButton(
-                  onPressed: selectedRole == null
-                      ? null // rol seçilmediyse buton pasif
-                      : () {
-                          if (selectedRole == "student") {
-                            Navigator.pop(context);
-                            Navigator.pushNamed(
-                                context, "/RegisterPageStudent");
-                          } else {
-                            Navigator.pop(context);
-                            Navigator.pushNamed(
-                                context, "/RegisterPageTeacher");
-                          }
-                        },
-                  text: "SEÇ")
-            ],
-          ),
+            MyButton(
+                onPressed: selectedRole == null
+                    ? null // rol seçilmediyse buton pasif
+                    : () {
+                        if (selectedRole == "student") {
+                          Navigator.pop(context);
+                          Navigator.pushNamed(context, "/RegisterPageStudent");
+                        } else {
+                          Navigator.pop(context);
+                          Navigator.pushNamed(context, "/RegisterPageTeacher");
+                        }
+                      },
+                text: "SEÇ")
+          ],
         ),
       ),
     );

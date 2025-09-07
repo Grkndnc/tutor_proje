@@ -6,9 +6,12 @@ class Mytextfield extends StatelessWidget {
   final String labelText;
   final String hintText;
   Widget? suffixIcon;
-
+  TextEditingController? controller;
+  final bool obscureText;
   Mytextfield(
       {super.key,
+      this.obscureText = false,
+      this.controller,
       required this.labelText,
       required this.hintText,
       this.suffixIcon});
@@ -18,6 +21,8 @@ class Mytextfield extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(7.0),
       child: TextFormField(
+        obscureText: obscureText,
+        controller: controller,
         cursorColor: Theme.of(context).colorScheme.secondary,
         decoration: InputDecoration(
           focusedBorder: OutlineInputBorder(

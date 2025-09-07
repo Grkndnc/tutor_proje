@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:tutorapp_deneme/components/my_button.dart';
 import 'package:tutorapp_deneme/components/my_text_field.dart';
 
-class RegisterPageTeacher extends StatelessWidget {
-  const RegisterPageTeacher({super.key});
+class TeacherRegisterPage extends StatelessWidget {
+  const TeacherRegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: SafeArea(
+      body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(25),
           child: Column(

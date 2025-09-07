@@ -2,14 +2,15 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:tutorapp_deneme/pages/commonpages/auth_page.dart';
 import 'firebase_options.dart';
-import 'package:tutorapp_deneme/pages/commonpages/Intro_page.dart';
+import 'package:tutorapp_deneme/pages/commonpages/intro_page.dart';
 import 'package:tutorapp_deneme/Themes/themes.dart';
 import 'package:tutorapp_deneme/pages/commonpages/forgot_password_page.dart';
 import 'package:tutorapp_deneme/pages/studentpages/home_page.dart';
 import 'package:tutorapp_deneme/pages/commonpages/login_page.dart';
 import 'package:tutorapp_deneme/pages/studentpages/register_page_student.dart';
-import 'package:tutorapp_deneme/pages/teacherpages/register_page_teacher.dart';
+import 'package:tutorapp_deneme/pages/teacherpages/teacher_register_page.dart';
 import 'package:tutorapp_deneme/pages/commonpages/selection_page.dart';
 import 'package:tutorapp_deneme/pages/studentpages/tutor_resume_page.dart';
 import 'package:tutorapp_deneme/pages/studentpages/book_appointment_page.dart';
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(400, 1300),
+      designSize: const Size(450, 950),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
@@ -44,11 +45,12 @@ class MyApp extends StatelessWidget {
             theme: appTheme,
             debugShowCheckedModeBanner: false,
             routes: {
+              "/AuthPage": (context) => AuthPage(),
               "/IntroPage": (context) => const IntroPage(),
               "/LoginPage": (context) => const LoginPage(),
-              "/RegisterPageStudent": (context) => const RegisterPageStudent(),
-              "/RegisterPageTeacher": (context) => const RegisterPageTeacher(),
-              "/HomePage": (context) => HomePage(),
+              "/RegisterPageStudent": (context) => RegisterPageStudent(),
+              "/RegisterPageTeacher": (context) => TeacherRegisterPage(),
+              "/HomePage": (context) => StudentHomePage(),
               "/RoleSelectionPage": (context) => RoleSelectionPage(),
               "/ForgotPasswordPage": (context) => ForgotPasswordPage(),
               "/AppointmentPage": (context) => TutorResumePage(),

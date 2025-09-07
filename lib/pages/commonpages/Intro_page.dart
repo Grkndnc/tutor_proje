@@ -18,7 +18,7 @@ class IntroPage extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .headlineLarge
-                  ?.copyWith(fontSize: 55),
+                  ?.copyWith(fontSize: 50),
             ),
             SizedBox(
               height: 50.h,
@@ -55,7 +55,7 @@ class IntroPage extends StatelessWidget {
                     textStyle: Theme.of(context).textTheme.headlineMedium,
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(context, "/LoginPage");
+                    Navigator.pushNamed(context, "/AuthPage");
                   },
                   child: Text(
                     "Tıklayınız",

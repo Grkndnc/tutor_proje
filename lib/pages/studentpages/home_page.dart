@@ -8,14 +8,14 @@ import 'package:tutorapp_deneme/pages/studentpages/tutor_resume_page.dart';
 
 import 'package:tutorapp_deneme/providers/teachers_provider.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class StudentHomePage extends StatefulWidget {
+  const StudentHomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<StudentHomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<StudentHomePage> {
   String? selectedRole;
   // Seçili kategorileri takip eden liste
   Set<String> selectedCategories = {};
