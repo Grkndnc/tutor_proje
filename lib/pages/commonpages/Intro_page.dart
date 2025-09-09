@@ -55,7 +55,7 @@ class IntroPage extends StatelessWidget {
                     textStyle: Theme.of(context).textTheme.headlineMedium,
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(context, "/AuthPage");
+                    Navigator.pushNamed(context, "/LoginPage");
                   },
                   child: Text(
                     "Tıklayınız",

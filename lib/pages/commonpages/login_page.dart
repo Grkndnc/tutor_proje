@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tutorapp_deneme/components/my_button.dart';
 import 'package:tutorapp_deneme/components/my_text_field.dart';
+import 'package:tutorapp_deneme/services/firebase_auth_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -11,8 +12,39 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController? emailController;
-  TextEditingController? passawordController;
+  late TextEditingController emailController;
+  late TextEditingController passwordController;
+  final FirebaseAuthService _firebaseAuthService = FirebaseAuthService();
+
+  @override
+  void initState() {
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _login() async {
+    try {
+      await _firebaseAuthService.loginUser(
+          email: emailController.text.trim(),
+          password: passwordController.text.trim());
+
+      Navigator.pushNamed(context, "/AuthPage");
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Giriş hatası: $e"),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +97,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   Mytextfield(
                     obscureText: true,
-                    controller: passawordController,
+                    controller: passwordController,
                     labelText: "Şifre",
                     hintText: "Şifre Giriniz",
                     suffixIcon: Icon(
@@ -87,7 +119,7 @@ class _LoginPageState extends State<LoginPage> {
                   MyButton(
                     text: "Giriş Yap",
                     onPressed: () {
-                      Navigator.pushNamed(context, "/HomePage");
+                      _login();
                     },
                   ),
                   SizedBox(height: 0.01.sh),
