@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class IntroPage extends StatelessWidget {
   const IntroPage({super.key});
@@ -7,69 +8,91 @@ class IntroPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //backgroundColor: Theme.of(context).colorScheme.surface,
-      body: Padding(
-        padding: EdgeInsets.only(top: 0.08.sh, bottom: 0.08.sh),
+      body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              "Hoşgeldiniz",
-              style: Theme.of(context)
-                  .textTheme
-                  .headlineLarge
-                  ?.copyWith(fontSize: 50),
-            ),
-            SizedBox(
-              height: 50.h,
-            ),
-            Container(
-              width: 0.8.sw,
-              height: 0.5.sh,
-              decoration: BoxDecoration(
-                border: Border.all(
-                    width: 3.w, color: Theme.of(context).colorScheme.secondary),
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                    image: AssetImage("images/logo.png"), fit: BoxFit.contain),
+            Padding(
+              padding: EdgeInsets.only(top: 25.sp),
+              child: Column(
+                children: [
+                  Text(
+                    "HocamBurda",
+                    style: GoogleFonts.fredoka(
+                        fontSize: 60.sp,
+                        color: Colors.blueGrey,
+                        fontWeight: FontWeight.w400),
+                  ),
+                  Image.asset(
+                    "images/Kids Studying from Home-bro.png",
+                  ),
+                ],
               ),
             ),
-            SizedBox(
-              height: 50.h,
+            Text(
+              "Bilgiyle buluşmanın en hızlı, en güvenilir yolu.",
+              style: GoogleFonts.oswald(fontSize: 18.sp, color: Colors.black54),
+              textAlign: TextAlign.center,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Devam etmek için",
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineMedium
-                      ?.copyWith(fontSize: 24),
-                ),
-                SizedBox(
-                  width: 15.w,
-                ),
-                TextButton(
-                  style: TextButton.styleFrom(
-                    textStyle: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, "/LoginPage");
-                  },
-                  child: Text(
-                    "Tıklayınız",
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium
-                        ?.copyWith(fontSize: 15),
-                  ),
-                ),
-              ],
-            )
+            SizedBox(
+              height: 20.h,
+            ),
+            Text(
+              "Bir ders, bir öğretmen, bir adım: HocamBurda!",
+              style: GoogleFonts.oswald(
+                  fontSize: 18.sp,
+                  color: Colors.black87,
+                  fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 100.h),
+            NewWidget(),
           ],
         ),
       ),
+    );
+  }
+}
+
+class NewWidget extends StatelessWidget {
+  const NewWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          "Devam etmek için",
+          style: Theme.of(context)
+              .textTheme
+              .headlineMedium
+              ?.copyWith(fontSize: 24.sp),
+        ),
+        SizedBox(
+          width: 15.w,
+        ),
+        TextButton(
+          onPressed: () {
+            print(MediaQuery.of(context).size);
+
+            Navigator.pushNamed(context, "/LoginPage");
+          },
+          child: Padding(
+            padding: EdgeInsets.only(top: 5.h),
+            child: Text(
+              "Tıklayınız",
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium
+                  ?.copyWith(fontSize: 15.sp),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

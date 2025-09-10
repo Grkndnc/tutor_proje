@@ -6,12 +6,14 @@ class Mytextfield extends StatelessWidget {
   final String labelText;
   final String hintText;
   Widget? suffixIcon;
+  Widget? prefixicon;
   TextEditingController? controller;
   final bool obscureText;
   Mytextfield(
       {super.key,
       this.obscureText = false,
       this.controller,
+      this.prefixicon,
       required this.labelText,
       required this.hintText,
       this.suffixIcon});
@@ -30,6 +32,7 @@ class Mytextfield extends StatelessWidget {
             borderSide: BorderSide(
                 color: Theme.of(context).colorScheme.secondary, width: 2),
           ),
+          prefixIcon: prefixicon,
           suffixIcon: suffixIcon,
           labelStyle:
               Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 18),

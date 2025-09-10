@@ -33,9 +33,9 @@ ThemeData appTheme = ThemeData(
         color: Colors.blueGrey, fontSize: 22.sp, fontWeight: FontWeight.w600),
     displaySmall: GoogleFonts.oswald(
         color: Colors.blueGrey, fontSize: 18.sp, fontWeight: FontWeight.w600),
-        bodyLarge: GoogleFonts.oswald(
+    bodyLarge: GoogleFonts.oswald(
         color: Colors.black, fontSize: 18.sp, fontWeight: FontWeight.w300),
-        bodyMedium: GoogleFonts.oswald(
+    bodyMedium: GoogleFonts.oswald(
         color: Colors.black, fontSize: 15.sp, fontWeight: FontWeight.w300),
     bodySmall: GoogleFonts.oswald(
         color: Colors.black, fontSize: 15.sp, fontWeight: FontWeight.w400),

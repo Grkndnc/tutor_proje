@@ -50,6 +50,13 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme:
+            IconThemeData(color: Theme.of(context).colorScheme.secondary),
+        title: Text(
+          "Giriş",
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+        centerTitle: true,
         elevation: 0,
       ),
       body: SingleChildScrollView(
@@ -57,41 +64,25 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 10).r,
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    "GİRİŞ",
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineLarge
-                        ?.copyWith(fontSize: 55),
-                  ),
-                ),
-              ),
               Column(
                 children: [
                   Container(
                     width: 0.7.sw,
                     height: 0.4.sh,
                     decoration: BoxDecoration(
-                      border: Border.all(
-                          width: 3.w,
-                          color: Theme.of(context).colorScheme.secondary),
-                      shape: BoxShape.circle,
+                      shape: BoxShape.rectangle,
                       image: DecorationImage(
-                          image: AssetImage("images/logo.png"),
+                          image: AssetImage("images/Mathematics-amico.png"),
                           fit: BoxFit.contain),
                     ),
                   ),
                   SizedBox(height: 10.h),
                   Mytextfield(
                     controller: emailController,
-                    labelText: "E mail",
+                    labelText: "E-mail",
                     hintText: "E-mail Giriniz",
                     suffixIcon: Icon(
-                      Icons.supervised_user_circle_sharp,
+                      Icons.supervised_user_circle_outlined,
                       color: Theme.of(context).colorScheme.secondary,
                     ),
                   ),
@@ -101,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                     labelText: "Şifre",
                     hintText: "Şifre Giriniz",
                     suffixIcon: Icon(
-                      Icons.lock,
+                      Icons.lock_outline,
                       color: Theme.of(context).colorScheme.secondary,
                     ),
                   ),
