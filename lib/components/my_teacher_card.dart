@@ -23,76 +23,72 @@ class MyTeacherCard extends StatelessWidget {
         return Card(
           color: Colors.white,
           elevation: 2,
-          child: SizedBox(
-            width: 0.3.sw,
-            height: 0.17.sh,
-            child: Padding(
-              padding: EdgeInsets.all(12),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      CircleAvatar(
-                        backgroundColor: Colors.white,
-                        radius: 40.r,
-                        backgroundImage: AssetImage(teacher.image),
-                      ),
-                      Text(
-                        teacher.name,
-                        style: Theme.of(context).textTheme.headlineSmall,
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      Text(
-                        teacher.subject,
-                        style: Theme.of(context).textTheme.titleSmall,
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.star_rounded,
-                            color: Colors.yellow[600],
-                            size: 30,
-                          ),
-                          SizedBox(width: 10),
-                          Text(
-                            teacher.rating,
-                            style: Theme.of(context).textTheme.headlineSmall,
-                          ),
-                        ],
-                      ),
-                      // Profil butonu
-                      Directionality(
-                        textDirection: TextDirection.rtl,
-                        child: TextButton.icon(
-                          onPressed: onPressed,
-                          icon: Icon(
-                            Icons.arrow_back_outlined,
-                            color: Theme.of(context).colorScheme.secondary,
-                          ),
-                          label: Text(
-                            "Profile git",
-                            style: Theme.of(context).textTheme.titleSmall,
-                          ),
+          child: Padding(
+            padding: EdgeInsets.all(12),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: Colors.white,
+                      radius: 40.r,
+                      backgroundImage: AssetImage(teacher.image),
+                    ),
+                    Text(
+                      teacher.name,
+                      style: Theme.of(context).textTheme.headlineSmall,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Text(
+                      teacher.subject,
+                      style: Theme.of(context).textTheme.titleSmall,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.star_rounded,
+                          color: Colors.yellow[600],
+                          size: 30,
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          teacher.rating,
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                      ],
+                    ),
+                    // Profil butonu
+                    Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: TextButton.icon(
+                        onPressed: onPressed,
+                        icon: Icon(
+                          Icons.arrow_back_outlined,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                        label: Text(
+                          "Profile git",
+                          style: Theme.of(context).textTheme.titleSmall,
                         ),
                       ),
-                      Text(
-                        teacher.price,
-                        style: Theme.of(context).textTheme.headlineSmall,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                    Text(
+                      teacher.price,
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         );

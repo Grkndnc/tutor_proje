@@ -7,7 +7,7 @@ import 'firebase_options.dart';
 import 'package:tutorapp_deneme/pages/commonpages/intro_page.dart';
 import 'package:tutorapp_deneme/Themes/themes.dart';
 import 'package:tutorapp_deneme/pages/commonpages/forgot_password_page.dart';
-import 'package:tutorapp_deneme/pages/studentpages/home_page.dart';
+import 'package:tutorapp_deneme/pages/studentpages/student_home_page.dart';
 import 'package:tutorapp_deneme/pages/commonpages/login_page.dart';
 import 'package:tutorapp_deneme/pages/studentpages/register_page_student.dart';
 import 'package:tutorapp_deneme/pages/teacherpages/teacher_register_page.dart';
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(450, 965),
+      designSize: const Size(400, 1000),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {

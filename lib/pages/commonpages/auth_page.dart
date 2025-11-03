@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tutorapp_deneme/pages/commonpages/login_page.dart';
-import 'package:tutorapp_deneme/pages/studentpages/home_page.dart';
-import 'package:tutorapp_deneme/pages/teacherpages/teacher_home_page.dart';
+import 'package:tutorapp_deneme/pages/studentpages/student_home_page.dart';
+import 'package:tutorapp_deneme/pages/teacherpages/teacher_nav_bar.dart';
 
 import 'package:tutorapp_deneme/services/firebase_auth_service.dart';
 
@@ -32,7 +32,7 @@ class _MainPageCheckUsersLoginsState extends State<AuthPage> {
         }
         if (snapshot.hasData) {
           final uid = snapshot.data!.uid;
-          print(uid);
+
           return FutureBuilder<String?>(
             future: _firebaseAuthService.getUserRole(uid),
             builder: (context, rolesnapshot) {
@@ -45,9 +45,9 @@ class _MainPageCheckUsersLoginsState extends State<AuthPage> {
                 return Text("Rol bilgisi alınamadı");
               }
               final role = rolesnapshot.data;
-              print(role);
+
               if (role == "teacher") {
-                return TeacherHomePage();
+                return TeacherNavBar();
               }
               if (role == "student") {
                 return StudentHomePage();

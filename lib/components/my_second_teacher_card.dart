@@ -38,11 +38,9 @@ class _MySecondTeacherCardState extends State<MySecondTeacherCard> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Üst kısım: Resim, isim ve ikonlar
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Öğretmen resmi - büyütüldü
                   Container(
                     width: 100.w,
                     height: 100.h,

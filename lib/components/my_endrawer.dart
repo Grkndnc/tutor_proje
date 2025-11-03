@@ -32,22 +32,26 @@ class MyEndDrawer extends StatelessWidget {
                             children: [
                               Text(
                                 "Hoşgeldin !",
-                                style: Theme.of(context).textTheme.headlineMedium,
+                                style:
+                                    Theme.of(context).textTheme.headlineMedium,
                               ),
                               SizedBox(
                                 height: 15.h,
                               ),
                               Text(
                                 student?.fullName ?? "Öğrenci",
-                                style: Theme.of(context).textTheme.headlineSmall,
+                                style:
+                                    Theme.of(context).textTheme.headlineSmall,
                               ),
                             ],
                           ),
                         ),
                         CircleAvatar(
-                          backgroundColor: Theme.of(context).colorScheme.secondary,
+                          backgroundColor:
+                              Theme.of(context).colorScheme.secondary,
                           radius: 30.r,
-                          backgroundImage: AssetImage(student?.image ?? "images/student 1.png"),
+                          backgroundImage: AssetImage(
+                              student?.image ?? "images/student 1.png"),
                         ),
                         SizedBox(
                           width: 15.w,

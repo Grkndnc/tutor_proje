@@ -67,18 +67,13 @@ class NewWidget extends StatelessWidget {
       children: [
         Text(
           "Devam etmek için",
-          style: Theme.of(context)
-              .textTheme
-              .headlineMedium
-              ?.copyWith(fontSize: 24.sp),
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
         SizedBox(
           width: 15.w,
         ),
         TextButton(
           onPressed: () {
-            print(MediaQuery.of(context).size);
-
             Navigator.pushNamed(context, "/LoginPage");
           },
           child: Padding(

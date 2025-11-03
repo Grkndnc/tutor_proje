@@ -16,6 +16,7 @@ class StudentHomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<StudentHomePage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String? selectedRole;
   // Seçili kategorileri takip eden liste
   Set<String> selectedCategories = {};
@@ -67,14 +68,50 @@ class _HomePageState extends State<StudentHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         iconTheme:
             IconThemeData(color: Theme.of(context).colorScheme.secondary),
-        centerTitle: true,
-        title: Text(
-          "Ana Sayfa",
-          style: Theme.of(context).textTheme.titleLarge,
+        title: Padding(
+          padding: const EdgeInsets.only(left: 15),
+          child: Text(
+            "Ana Sayfa",
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
         ),
+        automaticallyImplyLeading: false,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: GestureDetector(
+              onTap: () {},
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Icon(Icons.notifications, size: 28),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: GestureDetector(
+              onTap: () {
+                _scaffoldKey.currentState?.openEndDrawer();
+              },
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Icon(Icons.menu, color: Colors.blueGrey, size: 28),
+              ),
+            ),
+          ),
+        ],
       ),
       endDrawer: MyEndDrawer(),
       body: Column(
