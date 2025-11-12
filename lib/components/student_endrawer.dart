@@ -5,8 +5,8 @@ import 'package:tutorapp_deneme/components/my_list_tile.dart';
 import 'package:tutorapp_deneme/providers/teachers_provider.dart';
 import 'package:tutorapp_deneme/providers/student_provider.dart';
 
-class MyEndDrawer extends StatelessWidget {
-  const MyEndDrawer({super.key});
+class StudentEndDrawer extends StatelessWidget {
+  const StudentEndDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class MyEndDrawer extends StatelessWidget {
                                     Theme.of(context).textTheme.headlineMedium,
                               ),
                               SizedBox(
-                                height: 15.h,
+                                height: 10.h,
                               ),
                               Text(
                                 student?.fullName ?? "Öğrenci",

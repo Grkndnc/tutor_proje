@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:tutorapp_deneme/components/my_category_card.dart';
-import 'package:tutorapp_deneme/components/my_endrawer.dart';
+
 import 'package:tutorapp_deneme/components/my_teacher_card.dart';
+import 'package:tutorapp_deneme/components/student_endrawer.dart';
 import 'package:tutorapp_deneme/pages/studentpages/tutor_resume_page.dart';
 
 import 'package:tutorapp_deneme/providers/teachers_provider.dart';
@@ -113,7 +114,7 @@ class _HomePageState extends State<StudentHomePage> {
           ),
         ],
       ),
-      endDrawer: MyEndDrawer(),
+      endDrawer: StudentEndDrawer(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

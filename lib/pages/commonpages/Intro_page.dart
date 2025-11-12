@@ -9,46 +9,49 @@ class IntroPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-              padding: EdgeInsets.only(top: 25.sp),
-              child: Column(
-                children: [
-                  Text(
-                    "HocamBurda",
-                    style: GoogleFonts.fredoka(
-                        fontSize: 60.sp,
-                        color: Colors.blueGrey,
-                        fontWeight: FontWeight.w400),
-                  ),
-                  Image.asset(
-                    "images/Kids Studying from Home-bro.png",
-                  ),
-                ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top: 25.sp),
+                child: Column(
+                  children: [
+                    Text(
+                      "HocamBurda",
+                      style: GoogleFonts.fredoka(
+                          fontSize: 60.sp,
+                          color: Colors.blueGrey,
+                          fontWeight: FontWeight.w400),
+                    ),
+                    Image.asset(
+                      "images/Kids Studying from Home-bro.png",
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Text(
-              "Bilgiyle buluşmanın en hızlı, en güvenilir yolu.",
-              style: GoogleFonts.oswald(fontSize: 18.sp, color: Colors.black54),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
-            Text(
-              "Bir ders, bir öğretmen, bir adım: HocamBurda!",
-              style: GoogleFonts.oswald(
-                  fontSize: 18.sp,
-                  color: Colors.black87,
-                  fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 100.h),
-            NewWidget(),
-          ],
+              Text(
+                "Bilgiyle buluşmanın en hızlı, en güvenilir yolu.",
+                style:
+                    GoogleFonts.oswald(fontSize: 18.sp, color: Colors.black54),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: 20.h,
+              ),
+              Text(
+                "Bir ders, bir öğretmen, bir adım: HocamBurda!",
+                style: GoogleFonts.oswald(
+                    fontSize: 18.sp,
+                    color: Colors.black87,
+                    fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 100.h),
+              NewWidget(),
+            ],
+          ),
         ),
       ),
     );
