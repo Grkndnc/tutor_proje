@@ -13,7 +13,7 @@ class TeacherNavBar extends StatefulWidget {
 }
 
 class _TeacherNavBarState extends State<TeacherNavBar> {
-  int selectedIndex = 0;
+  static int selectedIndex = 0;
 
   List<Widget> pages = [
     const TeacherHomePage(),
@@ -27,46 +27,42 @@ class _TeacherNavBarState extends State<TeacherNavBar> {
         index: selectedIndex,
         children: pages,
       ),
-      bottomNavigationBar: Padding(
-        padding: EdgeInsetsGeometry.all(12),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(25),
-            color: Colors.white,
-          ),
-          child: GNav(
-            hoverColor: Colors.transparent,
-            rippleColor: Colors.transparent,
-            backgroundColor: Colors.transparent,
-            tabBackgroundColor: Colors.transparent,
-            haptic: true,
-            duration: Duration(milliseconds: 500),
-            gap: 8,
-            color: Theme.of(context).colorScheme.secondary,
-            activeColor: Theme.of(context).colorScheme.secondary,
-            iconSize: 28.sp,
-            padding: EdgeInsets.symmetric(horizontal: 35.h, vertical: 20.w),
-            selectedIndex: selectedIndex,
-            onTabChange: (index) {
-              setState(() {
-                selectedIndex = index;
-              });
-            },
-            tabs: [
-              GButton(
-                icon: Icons.home,
-                text: 'Ana Sayfa',
-              ),
-              GButton(
-                icon: Icons.add,
-                text: 'Kart Oluştur',
-              ),
-              GButton(
-                icon: Icons.person,
-                text: 'Profil',
-              )
-            ],
-          ),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+        ),
+        child: GNav(
+          hoverColor: Colors.transparent,
+          rippleColor: Colors.transparent,
+          backgroundColor: Colors.transparent,
+          tabBackgroundColor: Colors.transparent,
+          haptic: true,
+          duration: Duration(milliseconds: 500),
+          gap: 8,
+          color: Theme.of(context).colorScheme.secondary,
+          activeColor: Theme.of(context).colorScheme.secondary,
+          iconSize: 28.sp,
+          padding: EdgeInsets.symmetric(horizontal: 35.h, vertical: 20.w),
+          selectedIndex: selectedIndex,
+          onTabChange: (index) {
+            setState(() {
+              selectedIndex = index;
+            });
+          },
+          tabs: [
+            GButton(
+              icon: Icons.home,
+              text: 'Ana Sayfa',
+            ),
+            GButton(
+              icon: Icons.add,
+              text: 'Kart Oluştur',
+            ),
+            GButton(
+              icon: Icons.person,
+              text: 'Profil',
+            )
+          ],
         ),
       ),
     );
