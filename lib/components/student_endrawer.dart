@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:tutorapp_deneme/components/my_list_tile.dart';
+import 'package:tutorapp_deneme/components/my_show_dialog.dart';
 import 'package:tutorapp_deneme/providers/teachers_provider.dart';
 import 'package:tutorapp_deneme/providers/student_provider.dart';
 
@@ -93,60 +94,25 @@ class StudentEndDrawer extends StatelessWidget {
             ],
           ),
           MyListTile(
-              text: 'Log Out',
-              icon: Icons.logout,
-              onTap: () {
-                showDialog(
-                    barrierDismissible: false,
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text("Çıkış"),
-                        backgroundColor: Colors.white,
-                        content: Text(
-                          "Çıkış Yapmak İstediğinizden Emin Misiniz ?",
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
-                        actions: [
-                          Padding(
-                            padding: EdgeInsets.all(15),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.pushNamedAndRemoveUntil(
-                                      context,
-                                      '/IntroPage',
-                                      (route) => false,
-                                    );
-                                  },
-                                  child: Text(
-                                    "Evet",
-                                    style:
-                                        Theme.of(context).textTheme.bodyMedium,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: Text(
-                                    "İptal",
-                                    style:
-                                        Theme.of(context).textTheme.bodyMedium,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      );
-                    });
-              }),
+            text: 'Log Out',
+            icon: Icons.logout,
+            onTap: () {
+              MyShowDialog.show(
+                cancelText: "İptal",
+                confirmText: "Çıkış Yap",
+                context: context,
+                title: "Çıkış",
+                content: "Çıkış yapmak istediğinizden emin misiniz ?",
+                onConfirm: () {
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    "/IntroPage",
+                    (route) => false,
+                  );
+                },
+              );
+            },
+          ),
         ],
       ),
     );

@@ -10,6 +10,9 @@ ThemeData appTheme = ThemeData(
     inversePrimary: Colors.white,
     surface: const Color.fromARGB(255, 190, 233, 255),
   ),
+  textSelectionTheme: const TextSelectionThemeData(
+    cursorColor: Colors.blueGrey, // GLOBAL CURSOR RENGİ
+  ),
 
   textTheme: TextTheme(
     headlineLarge: GoogleFonts.michroma(

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -8,10 +9,14 @@ class MySecondTeacherCard extends StatefulWidget {
   final Teacher teacher;
   final VoidCallback? onTap;
   final bool showContactInfo;
+  final bool showIcons;
+  final bool editmode;
 
   const MySecondTeacherCard({
     super.key,
     required this.teacher,
+    this.editmode = true,
+    this.showIcons = true,
     this.onTap,
     this.showContactInfo = true,
   });
@@ -22,6 +27,51 @@ class MySecondTeacherCard extends StatefulWidget {
 
 class _MySecondTeacherCardState extends State<MySecondTeacherCard> {
   bool showAllSubjects = false;
+
+  late TextEditingController nameController;
+  late TextEditingController surnameController;
+  late TextEditingController emailController;
+  late TextEditingController phoneController;
+  late TextEditingController subjectController;
+  late TextEditingController imageController;
+  late TextEditingController secondaySubjectController;
+  late TextEditingController bioController;
+  late List<String> localSecondarySubjects;
+
+  @override
+  void initState() {
+    super.initState();
+    localSecondarySubjects = widget.teacher.secondarySubjects != null
+        ? List.from(widget.teacher.secondarySubjects!)
+        : [];
+
+    _initializeControllers();
+  }
+
+  void _addSubject(String subject) {
+    if (!localSecondarySubjects.contains(subject)) {
+      setState(() {
+        localSecondarySubjects.add(subject);
+      });
+    }
+  }
+
+  void _removeSubject(String subject) {
+    if (localSecondarySubjects.contains(subject)) {
+      setState(() {
+        localSecondarySubjects.remove(subject);
+      });
+    }
+  }
+
+  void _initializeControllers() {
+    nameController = TextEditingController(text: widget.teacher.name);
+    surnameController = TextEditingController(text: widget.teacher.surname);
+    emailController = TextEditingController(text: widget.teacher.email);
+    phoneController = TextEditingController(text: widget.teacher.phone);
+    subjectController = TextEditingController(text: widget.teacher.subject);
+    bioController = TextEditingController(text: widget.teacher.bio);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,8 +101,9 @@ class _MySecondTeacherCardState extends State<MySecondTeacherCard> {
                       ),
                       borderRadius: BorderRadius.circular(16.r),
                       image: DecorationImage(
-                        image: AssetImage(widget.teacher.image),
-                        fit: BoxFit.contain,
+                        image: AssetImage(
+                            widget.teacher.image ?? "images/social.png"),
+                        fit: BoxFit.fill,
                       ),
                     ),
                   ),
@@ -64,40 +115,90 @@ class _MySecondTeacherCardState extends State<MySecondTeacherCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.teacher.name,
+                          widget.teacher.fullName,
                           style: Theme.of(context).textTheme.headlineMedium,
                         ),
                         SizedBox(height: 8.h),
 
-                        // Email bilgisi
-                        if (widget.showContactInfo) ...[
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.email_outlined,
-                                size: 16.sp,
-                                color: Theme.of(context).colorScheme.secondary,
-                              ),
-                              SizedBox(width: 8.w),
-                              Expanded(
-                                child: Text(
-                                  widget.teacher.email,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodySmall
-                                      ?.copyWith(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .secondary,
-                                      ),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 4.h),
+                        // Email bilgisi ---editmode
 
-                          // Telefon bilgisi
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.email_outlined,
+                              size: 16.sp,
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
+                            SizedBox(width: 8.w),
+                            widget.editmode
+                                ? SizedBox(
+                                    height: 30.r,
+                                    width: 180.r,
+                                    child: TextField(
+                                      cursorColor: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
+                                      maxLines: 1,
+                                      minLines: 1,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall
+                                          ?.copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .secondary,
+                                          ),
+                                      controller: emailController,
+                                      decoration: InputDecoration(
+                                        isDense: true,
+                                        contentPadding: EdgeInsets.all(4.r),
+                                        hintText: "Email yazınız",
+                                        hintStyle: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall
+                                            ?.copyWith(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary,
+                                            ),
+                                        focusedBorder: OutlineInputBorder(
+                                          gapPadding: 3,
+                                          borderSide: BorderSide(
+                                              width: 1, color: Colors.black),
+                                          borderRadius:
+                                              BorderRadius.circular(6),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          gapPadding: 3,
+                                          borderSide: BorderSide(
+                                              width: 1,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary),
+                                          borderRadius:
+                                              BorderRadius.circular(6.r),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                : Expanded(
+                                    child: Text(
+                                      widget.teacher.email,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall
+                                          ?.copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .secondary,
+                                          ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                          ],
+                        ),
+                        SizedBox(height: 4.h),
+                        if (widget.showContactInfo)
                           Row(
                             children: [
                               Icon(
@@ -106,58 +207,97 @@ class _MySecondTeacherCardState extends State<MySecondTeacherCard> {
                                 color: Theme.of(context).colorScheme.secondary,
                               ),
                               SizedBox(width: 8.w),
-                              Text(
-                                widget.teacher.phone,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall
-                                    ?.copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .secondary,
-                                    ),
-                              ),
+                              (widget.editmode
+                                  ? TextField(
+                                      maxLines: 1,
+                                      minLines: 1,
+                                      controller: phoneController,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall
+                                          ?.copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .secondary,
+                                          ),
+                                      decoration: InputDecoration(
+                                        isDense: true,
+                                        contentPadding: EdgeInsets.all(4.r),
+                                        hintText: "Telefon Numaranızı yazınız",
+                                        hintStyle: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall
+                                            ?.copyWith(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary,
+                                            ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              width: 1, color: Colors.black),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            width: 1,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .secondary,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  : Text(
+                                      widget.teacher.phone,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall
+                                          ?.copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .secondary,
+                                          ),
+                                    ))
                             ],
                           ),
-                        ],
                       ],
                     ),
                   ),
 
-                  // Sağ taraftaki ikonlar - resimle aynı hizada
-                  Column(
-                    children: [
-                      Consumer<TeachersProvider>(
-                        builder: (context, provider, child) {
-                          final isFavorite =
-                              provider.isFavorite(widget.teacher.id);
-                          return IconButton(
-                            onPressed: () {
-                              provider.toggleFavorite(widget.teacher);
-                              _showSnackBar(context, isFavorite);
-                            },
-                            icon: Icon(
-                              isFavorite
-                                  ? Icons.bookmark
-                                  : Icons.bookmark_border,
-                              color: Theme.of(context).colorScheme.secondary,
-                              size: 24.sp,
-                            ),
-                          );
-                        },
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          // Paylaşım fonksiyonu
-                        },
-                        icon: Icon(
-                          Icons.share_outlined,
-                          color: Theme.of(context).colorScheme.secondary,
-                          size: 24.sp,
+                  // Sağ taraftaki ikonlar - resimle aynı hizada ////gizle---göster//
+                  if (widget.showIcons)
+                    Column(
+                      children: [
+                        Consumer<TeachersProvider>(
+                          builder: (context, provider, child) {
+                            final isFavorite =
+                                provider.isFavorite(widget.teacher.id);
+                            return IconButton(
+                              onPressed: () {
+                                provider.toggleFavorite(widget.teacher);
+                                _showSnackBar(context, isFavorite);
+                              },
+                              icon: Icon(
+                                isFavorite
+                                    ? Icons.bookmark
+                                    : Icons.bookmark_border,
+                                color: Theme.of(context).colorScheme.secondary,
+                                size: 24.sp,
+                              ),
+                            );
+                          },
                         ),
-                      ),
-                    ],
-                  ),
+                        IconButton(
+                          onPressed: () {
+                            // Paylaşım fonksiyonu
+                          },
+                          icon: Icon(
+                            Icons.share_outlined,
+                            color: Theme.of(context).colorScheme.secondary,
+                            size: 24.sp,
+                          ),
+                        ),
+                      ],
+                    )
                 ],
               ),
 
@@ -190,130 +330,284 @@ class _MySecondTeacherCardState extends State<MySecondTeacherCard> {
 
                   SizedBox(width: 16.w),
 
-                  // Yan branşlar
+                  // ////////.  Yan branşlar bölümü
                   Expanded(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "Yan Branşlar",
-                          style:
-                              Theme.of(context).textTheme.titleMedium?.copyWith(
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                        ),
-                        SizedBox(height: 4.h),
-                        Wrap(
-                          spacing: 4.w,
-                          runSpacing: 2.h,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            ...widget.teacher.secondarySubjects
-                                .take(showAllSubjects
-                                    ? widget.teacher.secondarySubjects.length
-                                    : 3)
-                                .map((subject) => Container(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 8.w,
-                                        vertical: 4.h,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey[100],
-                                        borderRadius:
-                                            BorderRadius.circular(8.r),
-                                      ),
-                                      child: Text(
-                                        subject,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall
-                                            ?.copyWith(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .secondary,
-                                              fontSize: 12.sp,
+                            Text(
+                              "Yan Branşlar",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(fontWeight: FontWeight.w600),
+                            ),
+                            if (widget.editmode)
+                              GestureDetector(
+                                child: Icon(
+                                  CupertinoIcons.add_circled_solid,
+                                  size: 19.sp,
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                ),
+                                onTap: () async {
+                                  final allSubjects = [
+                                    "Matematik",
+                                    'Fizik',
+                                    'Kimya',
+                                    'Biyoloji',
+                                    'Tarih',
+                                    'Coğrafya',
+                                    'İngilizce',
+                                    "Türkçe"
+                                  ];
+
+                                  final selected = await showDialog<String>(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        title: Center(
+                                          child: Text(
+                                            "Lütfen Branş Seçiniz",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleMedium,
+                                          ),
+                                        ),
+                                        content: SizedBox(
+                                          width: double.maxFinite,
+                                          child: SingleChildScrollView(
+                                            child: Wrap(
+                                              spacing: 8.w,
+                                              runSpacing: 8.h,
+                                              children:
+                                                  allSubjects.map((subject) {
+                                                final isAdded =
+                                                    localSecondarySubjects
+                                                        .contains(subject);
+                                                return GestureDetector(
+                                                  onTap: () {
+                                                    Navigator.pop(
+                                                        context, subject);
+                                                  },
+                                                  child: Container(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 12.w,
+                                                            vertical: 8.h),
+                                                    decoration: BoxDecoration(
+                                                      color: isAdded
+                                                          ? Colors
+                                                              .green.shade100
+                                                          : Colors.blue.shade50,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12.r),
+                                                      border: Border.all(
+                                                        color: isAdded
+                                                            ? Colors
+                                                                .green.shade400
+                                                            : Colors
+                                                                .blue.shade200,
+                                                        width: 1,
+                                                      ),
+                                                    ),
+                                                    child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      children: [
+                                                        Text(
+                                                          subject,
+                                                          style: TextStyle(
+                                                            fontSize: 14.sp,
+                                                            color: isAdded
+                                                                ? Colors.green
+                                                                    .shade900
+                                                                : Colors.blue
+                                                                    .shade900,
+                                                          ),
+                                                        ),
+                                                        SizedBox(width: 4.w),
+                                                        Icon(
+                                                          isAdded
+                                                              ? Icons
+                                                                  .check_circle
+                                                              : Icons
+                                                                  .circle_outlined,
+                                                          size: 16.sp,
+                                                          color: isAdded
+                                                              ? Colors.green
+                                                                  .shade400
+                                                              : Colors.blue
+                                                                  .shade400,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                );
+                                              }).toList(),
                                             ),
-                                      ),
-                                    )),
-                            if (widget.teacher.secondarySubjects.length > 3 &&
-                                !showAllSubjects)
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    showAllSubjects = true;
-                                  });
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 8.w,
-                                    vertical: 4.h,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey[100],
-                                    borderRadius: BorderRadius.circular(8.r),
-                                    border: Border.all(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .secondary,
-                                      width: 1,
-                                    ),
-                                  ),
-                                  child: Text(
-                                    "+${widget.teacher.secondarySubjects.length - 3}",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall
-                                        ?.copyWith(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .secondary,
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w600,
+                                          ),
                                         ),
-                                  ),
-                                ),
-                              ),
-                            if (showAllSubjects)
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    showAllSubjects = false;
-                                  });
+                                      );
+                                    },
+                                  );
+
+                                  if (selected != null &&
+                                      !localSecondarySubjects
+                                          .contains(selected)) {
+                                    _addSubject(selected);
+                                  }
                                 },
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 8.w,
-                                    vertical: 4.h,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey[100],
-                                    borderRadius: BorderRadius.circular(8.r),
-                                    border: Border.all(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .secondary,
-                                      width: 1,
-                                    ),
-                                  ),
-                                  child: Text(
-                                    "Daha az",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall
-                                        ?.copyWith(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .secondary,
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                  ),
-                                ),
                               ),
                           ],
                         ),
+                        SizedBox(height: 4.h),
+                        ///// DERSLERİ GÖSTERMEK YAN BRANŞLARIN ALTI///////
+                        Builder(
+                          builder: (context) {
+                            final subjects = localSecondarySubjects;
+                            return Padding(
+                              padding: EdgeInsets.only(top: 5.r),
+                              child: Wrap(
+                                spacing: 4.w,
+                                runSpacing: 2.h,
+                                children: [
+                                  ...subjects
+                                      .take(
+                                          showAllSubjects ? subjects.length : 3)
+                                      .map(
+                                        (subject) => Container(
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: 8.w,
+                                            vertical: 4.h,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color: Colors.grey[100],
+                                            borderRadius:
+                                                BorderRadius.circular(8.r),
+                                          ),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Text(
+                                                subject,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodySmall
+                                                    ?.copyWith(
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .secondary,
+                                                      fontSize: 12.sp,
+                                                    ),
+                                              ),
+                                              if (widget.editmode)
+                                                GestureDetector(
+                                                  onTap: () =>
+                                                      _removeSubject(subject),
+                                                  child: Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: 4.w),
+                                                    child: Icon(
+                                                      Icons.close,
+                                                      size: 15.sp,
+                                                      color: Colors.red,
+                                                    ),
+                                                  ),
+                                                ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                  ////+ göster butonu ////////
+                                  if (subjects.length > 3 && !showAllSubjects)
+                                    GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          showAllSubjects = true;
+                                        });
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 8.w,
+                                          vertical: 4.h,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey[100],
+                                          borderRadius:
+                                              BorderRadius.circular(8.r),
+                                          border: Border.all(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .secondary,
+                                            width: 1,
+                                          ),
+                                        ),
+                                        child: Text(
+                                          "+${subjects.length - 3}",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall
+                                              ?.copyWith(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .secondary,
+                                                fontSize: 12.sp,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                        ),
+                                      ),
+                                    ),
+                                  ////// Daha az göster butonu////////////
+                                  if (showAllSubjects)
+                                    GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          showAllSubjects = false;
+                                        });
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 8.w,
+                                          vertical: 4.h,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey[100],
+                                          borderRadius:
+                                              BorderRadius.circular(8.r),
+                                          border: Border.all(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .secondary,
+                                            width: 1,
+                                          ),
+                                        ),
+                                        child: Text(
+                                          "Daha az",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall
+                                              ?.copyWith(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .secondary,
+                                                fontSize: 12.sp,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
                       ],
                     ),
-                  ),
+                  )
                 ],
               ),
             ],

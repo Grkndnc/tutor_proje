@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:tutorapp_deneme/components/my_appbar_button.dart';
 import 'package:tutorapp_deneme/components/my_category_card.dart';
 import 'package:tutorapp_deneme/components/my_teacher_card.dart';
-import 'package:tutorapp_deneme/components/student_endrawer.dart';
+
 import 'package:tutorapp_deneme/pages/studentpages/tutor_resume_page.dart';
 import 'package:tutorapp_deneme/providers/teachers_provider.dart';
 
@@ -15,7 +16,6 @@ class TeacherHomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<TeacherHomePage> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String? selectedRole;
   // Seçili kategorileri takip eden liste
   Set<String> selectedCategories = {};
@@ -67,12 +67,11 @@ class _HomePageState extends State<TeacherHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
       appBar: AppBar(
         iconTheme:
             IconThemeData(color: Theme.of(context).colorScheme.secondary),
-        title: Padding(
-          padding: const EdgeInsets.only(left: 15),
+        title: Align(
+          alignment: AlignmentDirectional.centerStart,
           child: Text(
             "Ana Sayfa",
             style: Theme.of(context).textTheme.titleLarge,
@@ -80,39 +79,24 @@ class _HomePageState extends State<TeacherHomePage> {
         ),
         automaticallyImplyLeading: false,
         actions: [
+          MyAppBarButton(icon: Icons.notifications, onTap: () {}),
           Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: GestureDetector(
-              onTap: () {},
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.onPrimary,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Icon(Icons.notifications, size: 28),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: GestureDetector(
-              onTap: () {
-                _scaffoldKey.currentState?.openEndDrawer();
-              },
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.onPrimary,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Icon(Icons.menu, color: Colors.blueGrey, size: 28),
-              ),
+            padding: const EdgeInsets.only(right: 8).r,
+            child: CircleAvatar(
+              backgroundColor: Theme.of(context).colorScheme.onPrimary,
+              radius: 22.r,
+              backgroundImage:
+                  context.watch<TeachersProvider>().currentTeacher != null
+                      ? AssetImage(context
+                              .watch<TeachersProvider>()
+                              .currentTeacher!
+                              .image ??
+                          "images/social.png")
+                      : AssetImage("images/social.png"),
             ),
           ),
         ],
       ),
-      endDrawer: StudentEndDrawer(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

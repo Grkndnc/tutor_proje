@@ -33,7 +33,7 @@ class EditableInfoField extends StatelessWidget {
           border: Border.all(
             color: isEditing
                 ? Theme.of(context).colorScheme.secondary
-                : Theme.of(context).colorScheme.outline,
+                : Theme.of(context).colorScheme.primary,
             width: isEditing ? 2 : 1,
           ),
         ),

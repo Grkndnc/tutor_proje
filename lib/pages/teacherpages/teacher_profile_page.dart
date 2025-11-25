@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-
+import 'package:tutorapp_deneme/components/my_show_dialog.dart';
 import 'package:tutorapp_deneme/providers/teachers_provider.dart';
 
 class TeacherProfilePage extends StatelessWidget {
@@ -20,7 +20,7 @@ class TeacherProfilePage extends StatelessWidget {
       ),
       body: Consumer<TeachersProvider>(
         builder: (context, provider, child) {
-          final teacher = provider.allTeachers[2];
+          final teacher = provider.currentTeacher;
           return Stack(
             children: [
               Positioned(
@@ -42,8 +42,12 @@ class TeacherProfilePage extends StatelessWidget {
                 top: 30,
                 left: 25,
                 child: CircleAvatar(
-                  radius: 70.r,
-                  child: Image.asset("images/social.png"),
+                  radius: 67.r,
+                  backgroundColor: Colors.blueGrey.shade400,
+                  child: CircleAvatar(
+                    radius: 65.r,
+                    child: Image.asset(teacher?.image ?? "images/social.png"),
+                  ),
                 ),
               ),
               Positioned(
@@ -53,7 +57,7 @@ class TeacherProfilePage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      teacher.name,
+                      teacher!.fullName,
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     Text(teacher.email)
@@ -65,12 +69,15 @@ class TeacherProfilePage extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsetsGeometry.only(top: 100.h, right: 15.r),
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(context, "/TeacherProfileEditPage");
+                    },
                     child: Container(
                       width: 100.w,
                       height: 50.h,
                       decoration: BoxDecoration(
-                          border: BoxBorder.all(width: 1.r),
+                          border:
+                              BoxBorder.all(width: 1.r, color: Colors.blueGrey),
                           borderRadius: BorderRadius.circular(12.r),
                           color: Theme.of(context).colorScheme.surface),
                       child: Center(
@@ -144,12 +151,30 @@ class TeacherProfilePage extends StatelessWidget {
                       ProfileBox(
                         icon: Icons.lock_open_rounded,
                         text: "Şifre Değiştir",
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, "/TeacherRenewPasswordPage");
+                        },
                       ),
                       ProfileBox(
                         icon: Icons.logout,
                         text: "Çıkış",
-                        onTap: () {},
+                        onTap: () {
+                          MyShowDialog.show(
+                              cancelText: "Hayır",
+                              confirmText: "Evet",
+                              context: context,
+                              title: "Çıkış",
+                              content:
+                                  "Çıkış yapmak istediğinizden emin misiniz ?",
+                              onConfirm: () {
+                                Navigator.pushNamedAndRemoveUntil(
+                                  context,
+                                  "/IntroPage",
+                                  (route) => false,
+                                );
+                              });
+                        },
                       ),
                     ],
                   ),
@@ -192,10 +217,7 @@ class ProfileBox extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Icon(
-                  icon,
-                  color: Colors.blueGrey,
-                ),
+                Icon(icon, color: Theme.of(context).colorScheme.secondary),
                 SizedBox(width: 10.r),
                 Text(
                   text,

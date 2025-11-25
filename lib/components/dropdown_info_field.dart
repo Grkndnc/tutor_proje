@@ -29,7 +29,7 @@ class DropdownInfoField extends StatelessWidget {
           border: Border.all(
             color: onChanged != null
                 ? Theme.of(context).colorScheme.secondary
-                : Theme.of(context).colorScheme.outline,
+                : Theme.of(context).colorScheme.primary,
             width: onChanged != null ? 2 : 1,
           ),
         ),

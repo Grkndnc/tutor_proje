@@ -29,7 +29,8 @@ class _TutorResumePageState extends State<TutorResumePage> {
     currentTeacher = widget.teacher ??
         Teacher(
           id: '1',
-          name: 'Gürkan DİNÇ',
+          name: 'Gürkan',
+          surname: "DİNÇ",
           subject: 'Matematik',
           rating: '4.7',
           price: '350 TRY/Sa',
@@ -106,22 +107,22 @@ class _TutorResumePageState extends State<TutorResumePage> {
                   MyInfoCard(
                     icon: Icons.school,
                     title: "Eğitim",
-                    value: currentTeacher.education,
+                    value: currentTeacher.education ?? " ",
                   ),
                   MyInfoCard(
                     icon: Icons.work_history,
                     title: "Deneyim",
-                    value: currentTeacher.experience,
+                    value: currentTeacher.experience ?? "",
                   ),
                   MyInfoCard(
                     icon: Icons.location_on,
                     title: "Konum",
-                    value: currentTeacher.location,
+                    value: currentTeacher.location ?? "",
                   ),
                   MyInfoCard(
                     icon: Icons.monetization_on,
                     title: "Ders Ücreti",
-                    value: currentTeacher.price,
+                    value: currentTeacher.price ?? "  ",
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(

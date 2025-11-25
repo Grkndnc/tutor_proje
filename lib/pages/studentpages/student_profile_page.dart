@@ -146,14 +146,6 @@ class _StudentProfilePageState extends State<StudentProfilePage> {
                               color: Theme.of(context).colorScheme.secondary,
                               width: 2,
                             ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey,
-                                spreadRadius: 1,
-                                blurRadius: 4,
-                                offset: const Offset(0, 2),
-                              ),
-                            ],
                           ),
                           child: TextField(
                             controller: bioController,
@@ -182,16 +174,8 @@ class _StudentProfilePageState extends State<StudentProfilePage> {
                             borderRadius: BorderRadius.circular(12.r),
                             color: Theme.of(context).colorScheme.surface,
                             border: Border.all(
-                              color: Theme.of(context).colorScheme.outline,
+                              color: Theme.of(context).colorScheme.primary,
                             ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey,
-                                spreadRadius: 1,
-                                blurRadius: 4,
-                                offset: const Offset(0, 2),
-                              ),
-                            ],
                           ),
                           child: Text(
                             student.bio,

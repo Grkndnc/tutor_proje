@@ -4,6 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:tutorapp_deneme/pages/commonpages/auth_page.dart';
+import 'package:tutorapp_deneme/pages/commonpages/reset_password_page.dart';
+import 'package:tutorapp_deneme/pages/teacherpages/teacher_profile_edit_page.dart';
+import 'package:tutorapp_deneme/pages/teacherpages/teacher_renew_password_page.dart';
 import 'firebase_options.dart';
 import 'package:tutorapp_deneme/pages/commonpages/intro_page.dart';
 import 'package:tutorapp_deneme/Themes/themes.dart';
@@ -61,6 +64,10 @@ class MyApp extends StatelessWidget {
               "/StudentProfilePage": (context) => StudentProfilePage(),
               "/book-appointment": (context) => BookAppointmentPage(),
               "/my-favorite-teachers": (context) => MyFavoriteTeachers(),
+              "/TeacherRenewPasswordPage": (context) =>
+                  TeacherRenewPasswordPage(),
+              "/ResetPasswordPage": (context) => ResetPasswordPage(),
+              "/TeacherProfileEditPage": (context) => TeacherProfileEditPage(),
             },
           ),
         );

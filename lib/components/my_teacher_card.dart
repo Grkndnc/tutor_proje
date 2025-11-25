@@ -34,7 +34,8 @@ class MyTeacherCard extends StatelessWidget {
                     CircleAvatar(
                       backgroundColor: Colors.white,
                       radius: 40.r,
-                      backgroundImage: AssetImage(teacher.image),
+                      backgroundImage:
+                          AssetImage(teacher.image ?? "/images/social.png"),
                     ),
                     Text(
                       teacher.name,
@@ -62,7 +63,7 @@ class MyTeacherCard extends StatelessWidget {
                         ),
                         SizedBox(width: 10),
                         Text(
-                          teacher.rating,
+                          teacher.rating ?? "  ",
                           style: Theme.of(context).textTheme.headlineSmall,
                         ),
                       ],
@@ -83,7 +84,7 @@ class MyTeacherCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      teacher.price,
+                      teacher.price ?? "   ",
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                   ],

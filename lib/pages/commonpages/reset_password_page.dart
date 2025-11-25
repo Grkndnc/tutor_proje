@@ -3,20 +3,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tutorapp_deneme/components/my_button.dart';
 
 import 'package:tutorapp_deneme/components/my_text_field.dart';
+import 'package:tutorapp_deneme/pages/commonpages/login_page.dart';
 
-class ForgotPasswordPage extends StatelessWidget {
-  const ForgotPasswordPage({super.key});
+class ResetPasswordPage extends StatelessWidget {
+  const ResetPasswordPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         foregroundColor: Colors.blueGrey,
         backgroundColor: Colors.transparent,
         centerTitle: true,
         title: Text(
-          "Şifremi Unuttum",
+          "Şifremi Yenile",
           style: Theme.of(context).textTheme.titleLarge,
         ),
       ),
@@ -39,12 +41,21 @@ class ForgotPasswordPage extends StatelessWidget {
                 padding: EdgeInsets.only(left: 18.w, top: 40.h, bottom: 10.h),
                 child: Align(
                     alignment: AlignmentGeometry.centerLeft,
-                    child: Text("Email",
+                    child: Text("Şifre",
                         style: Theme.of(context).textTheme.displayMedium)),
               ),
               Mytextfield(
-                  labelText: "E-mail Adresi",
-                  hintText: "E-mail Adresi Giriniz"),
+                  labelText: "Yeni Şifre", hintText: " Yeni Şifrenizi Giriniz"),
+              Padding(
+                padding: EdgeInsets.only(left: 18.w, top: 5.h, bottom: 5.h),
+                child: Align(
+                    alignment: AlignmentGeometry.centerLeft,
+                    child: Text("Yeni Şifre Onayı",
+                        style: Theme.of(context).textTheme.displayMedium)),
+              ),
+              Mytextfield(
+                  labelText: "Yeni Şifre Tekrar",
+                  hintText: "Yeni Şifrenizi Giriniz"),
               SizedBox(height: 30.h),
               MyButton(
                   onPressed: () {
@@ -81,8 +92,13 @@ class ForgotPasswordPage extends StatelessWidget {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.pushNamed(
-                                      context, "/ResetPasswordPage");
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => LoginPage(),
+                                    ),
+                                    (route) => false,
+                                  );
                                 },
                                 child: Container(
                                   height: 35.h,

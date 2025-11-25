@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tutorapp_deneme/components/my_button.dart';
 import 'package:tutorapp_deneme/components/my_text_field.dart';
+import 'package:tutorapp_deneme/pages/teacherpages/teacher_nav_bar.dart';
 import 'package:tutorapp_deneme/services/firebase_auth_service.dart';
 
 class LoginPage extends StatefulWidget {
@@ -36,8 +37,10 @@ class _LoginPageState extends State<LoginPage> {
           email: emailController.text.trim(),
           password: passwordController.text.trim());
 
+      // ignore: use_build_context_synchronously
       Navigator.pushNamed(context, "/AuthPage");
     } catch (e) {
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Giriş hatası: $e"),
@@ -50,6 +53,38 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, "/HomePage");
+            },
+            child: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.onPrimary,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const Icon(Icons.arrow_back, size: 28),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (_) => TeacherNavBar()));
+              },
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Icon(Icons.arrow_forward, size: 28),
+              ),
+            ),
+          ),
+        ],
         iconTheme:
             IconThemeData(color: Theme.of(context).colorScheme.secondary),
         title: Text(

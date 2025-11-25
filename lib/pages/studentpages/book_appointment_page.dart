@@ -35,7 +35,8 @@ class _BookAppointmentPageState extends State<BookAppointmentPage> {
     currentTeacher = widget.teacher ??
         Teacher(
           id: '1',
-          name: 'Gürkan DİNÇ',
+          name: 'Gürkan ',
+          surname: "DİNÇ",
           subject: 'Matematik',
           rating: '4.7',
           price: '350 TRY/Sa',
@@ -98,7 +99,8 @@ class _BookAppointmentPageState extends State<BookAppointmentPage> {
                         backgroundColor:
                             Theme.of(context).colorScheme.secondary,
                         radius: 30.r,
-                        backgroundImage: AssetImage(currentTeacher.image),
+                        backgroundImage: AssetImage(
+                            currentTeacher.image ?? "/images/social.png"),
                       ),
                       SizedBox(width: 16.w),
                       Expanded(
@@ -116,7 +118,7 @@ class _BookAppointmentPageState extends State<BookAppointmentPage> {
                             ),
                             SizedBox(height: 4.h),
                             Text(
-                              currentTeacher.price,
+                              currentTeacher.price ?? "   ",
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                           ],
