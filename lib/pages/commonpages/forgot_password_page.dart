@@ -37,10 +37,8 @@ class ForgotPasswordPage extends StatelessWidget {
             children: [
               Padding(
                 padding: EdgeInsets.only(left: 18.w, top: 40.h, bottom: 10.h),
-                child: Align(
-                    alignment: AlignmentGeometry.centerLeft,
-                    child: Text("Email",
-                        style: Theme.of(context).textTheme.displayMedium)),
+                child: Text("Email",
+                    style: Theme.of(context).textTheme.displayMedium),
               ),
               Mytextfield(
                   labelText: "E-mail Adresi",

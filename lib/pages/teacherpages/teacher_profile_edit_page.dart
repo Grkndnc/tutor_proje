@@ -350,10 +350,7 @@ class _TeacherProfileEditPageState extends State<TeacherProfileEditPage> {
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: Colors.blueGrey.shade100,
-                              border: BoxBorder.all(
-                                color: Colors.blueGrey.shade400,
-                                width: 1,
-                              ),
+                              
                             ),
                             child: Center(
                               child: Icon(

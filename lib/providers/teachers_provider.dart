@@ -209,6 +209,22 @@ class TeachersProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void updateTeacherDetails({
+    String? education,
+    String? experience,
+    String? location,
+    String? price,
+  }) {
+    if (_currentTeacher == null) return;
+    _currentTeacher = _currentTeacher!.copyWith(
+      education: education ?? _currentTeacher!.education,
+      experience: experience ?? _currentTeacher!.experience,
+      location: location ?? _currentTeacher!.location,
+      price: price ?? _currentTeacher!.price,
+    );
+    notifyListeners();
+  }
+
 //----------------------------------- - - - - -- - - ---------------------------------------------
   // Favori öğretmenleri temizleme
   void clearFavorites() {

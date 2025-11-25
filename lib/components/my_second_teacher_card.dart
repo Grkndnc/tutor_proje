@@ -35,7 +35,6 @@ class _MySecondTeacherCardState extends State<MySecondTeacherCard> {
   late TextEditingController subjectController;
   late TextEditingController imageController;
   late TextEditingController secondaySubjectController;
-  late TextEditingController bioController;
   late List<String> localSecondarySubjects;
 
   @override
@@ -70,7 +69,6 @@ class _MySecondTeacherCardState extends State<MySecondTeacherCard> {
     emailController = TextEditingController(text: widget.teacher.email);
     phoneController = TextEditingController(text: widget.teacher.phone);
     subjectController = TextEditingController(text: widget.teacher.subject);
-    bioController = TextEditingController(text: widget.teacher.bio);
   }
 
   @override
@@ -131,9 +129,7 @@ class _MySecondTeacherCardState extends State<MySecondTeacherCard> {
                             ),
                             SizedBox(width: 8.w),
                             widget.editmode
-                                ? SizedBox(
-                                    height: 30.r,
-                                    width: 180.r,
+                                ? Expanded(
                                     child: TextField(
                                       cursorColor: Theme.of(context)
                                           .colorScheme
@@ -181,23 +177,22 @@ class _MySecondTeacherCardState extends State<MySecondTeacherCard> {
                                       ),
                                     ),
                                   )
-                                : Expanded(
-                                    child: Text(
-                                      widget.teacher.email,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall
-                                          ?.copyWith(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .secondary,
-                                          ),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
+                                : Text(
+                                    widget.teacher.email,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall
+                                        ?.copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .secondary,
+                                        ),
+                                    overflow: TextOverflow.ellipsis,
                                   ),
                           ],
                         ),
                         SizedBox(height: 4.h),
+                        // telefon bilgisi -- editmode -- gizle goster
                         if (widget.showContactInfo)
                           Row(
                             children: [
@@ -208,23 +203,12 @@ class _MySecondTeacherCardState extends State<MySecondTeacherCard> {
                               ),
                               SizedBox(width: 8.w),
                               (widget.editmode
-                                  ? TextField(
-                                      maxLines: 1,
-                                      minLines: 1,
-                                      controller: phoneController,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall
-                                          ?.copyWith(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .secondary,
-                                          ),
-                                      decoration: InputDecoration(
-                                        isDense: true,
-                                        contentPadding: EdgeInsets.all(4.r),
-                                        hintText: "Telefon Numaranızı yazınız",
-                                        hintStyle: Theme.of(context)
+                                  ? Expanded(
+                                      child: TextField(
+                                        maxLines: 1,
+                                        minLines: 1,
+                                        controller: phoneController,
+                                        style: Theme.of(context)
                                             .textTheme
                                             .bodySmall
                                             ?.copyWith(
@@ -232,16 +216,30 @@ class _MySecondTeacherCardState extends State<MySecondTeacherCard> {
                                                   .colorScheme
                                                   .secondary,
                                             ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              width: 1, color: Colors.black),
-                                        ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            width: 1,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .secondary,
+                                        decoration: InputDecoration(
+                                          isDense: true,
+                                          contentPadding: EdgeInsets.all(4.r),
+                                          hintText:
+                                              "Telefon Numaranızı yazınız",
+                                          hintStyle: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall
+                                              ?.copyWith(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .secondary,
+                                              ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                width: 1, color: Colors.black),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              width: 1,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary,
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -333,6 +331,7 @@ class _MySecondTeacherCardState extends State<MySecondTeacherCard> {
                   // ////////.  Yan branşlar bölümü
                   Expanded(
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -472,6 +471,7 @@ class _MySecondTeacherCardState extends State<MySecondTeacherCard> {
                             return Padding(
                               padding: EdgeInsets.only(top: 5.r),
                               child: Wrap(
+                                alignment: WrapAlignment.start,
                                 spacing: 4.w,
                                 runSpacing: 2.h,
                                 children: [

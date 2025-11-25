@@ -40,7 +40,7 @@ class ResetPasswordPage extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(left: 18.w, top: 40.h, bottom: 10.h),
                 child: Align(
-                    alignment: AlignmentGeometry.centerLeft,
+                  
                     child: Text("Şifre",
                         style: Theme.of(context).textTheme.displayMedium)),
               ),
@@ -49,7 +49,7 @@ class ResetPasswordPage extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(left: 18.w, top: 5.h, bottom: 5.h),
                 child: Align(
-                    alignment: AlignmentGeometry.centerLeft,
+                  
                     child: Text("Yeni Şifre Onayı",
                         style: Theme.of(context).textTheme.displayMedium)),
               ),

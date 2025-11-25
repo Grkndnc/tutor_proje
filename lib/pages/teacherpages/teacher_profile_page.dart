@@ -67,7 +67,7 @@ class TeacherProfilePage extends StatelessWidget {
               Align(
                 alignment: Alignment.topRight,
                 child: Padding(
-                  padding: EdgeInsetsGeometry.only(top: 100.h, right: 15.r),
+                  padding: EdgeInsets.only(top: 100.h, right: 15.r),
                   child: GestureDetector(
                     onTap: () {
                       Navigator.pushNamed(context, "/TeacherProfileEditPage");
@@ -76,8 +76,8 @@ class TeacherProfilePage extends StatelessWidget {
                       width: 100.w,
                       height: 50.h,
                       decoration: BoxDecoration(
-                          border:
-                              BoxBorder.all(width: 1.r, color: Colors.blueGrey),
+                        border: Border.all(width: 1,color: Theme.of(context).colorScheme.secondary),
+                        
                           borderRadius: BorderRadius.circular(12.r),
                           color: Theme.of(context).colorScheme.surface),
                       child: Center(
@@ -91,9 +91,9 @@ class TeacherProfilePage extends StatelessWidget {
                 ),
               ),
               Align(
-                alignment: AlignmentGeometry.center,
+                alignment: Alignment.center,
                 child: Padding(
-                  padding: EdgeInsetsGeometry.only(
+                  padding: EdgeInsets.only(
                       left: 10.r, bottom: 10.r, right: 10.r),
                   child: Container(
                     height: 200.r,
@@ -140,7 +140,7 @@ class TeacherProfilePage extends StatelessWidget {
                 right: 0,
                 bottom: 40.r,
                 child: Padding(
-                  padding: EdgeInsetsGeometry.only(left: 12.r, right: 12.r),
+                  padding: EdgeInsets.only(left: 12.r, right: 12.r),
                   child: Column(
                     children: [
                       ProfileBox(
@@ -203,7 +203,7 @@ class ProfileBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsetsGeometry.all(6.r),
+      padding: EdgeInsets.all(6.r),
       child: GestureDetector(
         onTap: onTap,
         child: Container(
@@ -213,7 +213,7 @@ class ProfileBox extends StatelessWidget {
             color: Theme.of(context).colorScheme.surface,
           ),
           child: Padding(
-            padding: EdgeInsetsGeometry.all(12.r),
+            padding: EdgeInsets.all(12.r),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
