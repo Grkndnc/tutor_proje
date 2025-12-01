@@ -39,10 +39,17 @@ class EditableInfoField extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Icon(
-              icon,
-              color: Theme.of(context).colorScheme.secondary,
-              size: 24.sp,
+            Container(
+              padding: EdgeInsets.all(10.r),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              child: Icon(
+                icon,
+                color: Theme.of(context).colorScheme.secondary,
+                size: 24.sp,
+              ),
             ),
             SizedBox(width: 16.w),
             Expanded(

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:tutorapp_deneme/components/info_card.dart';
 import 'package:tutorapp_deneme/components/my_second_button.dart';
 import 'package:tutorapp_deneme/components/my_second_teacher_card.dart';
 import 'package:tutorapp_deneme/models/teacher.dart';
 import 'package:tutorapp_deneme/pages/studentpages/book_appointment_page.dart';
+import 'package:tutorapp_deneme/providers/teachers_provider.dart';
 
 class TutorResumePage extends StatefulWidget {
   final Teacher? teacher;
@@ -54,6 +56,7 @@ class _TutorResumePageState extends State<TutorResumePage> {
 
   @override
   Widget build(BuildContext context) {
+    final currentTeacher1 = context.watch<TeachersProvider>().currentTeacher;
     return Scaffold(
       appBar: AppBar(
         iconTheme:
@@ -84,6 +87,8 @@ class _TutorResumePageState extends State<TutorResumePage> {
                 children: [
                   // Yeni MySecondTeacherCard component'i
                   MySecondTeacherCard(
+                    editmode: false,
+                    showIcons: true,
                     teacher: currentTeacher,
                     onTap: () {
                       // Kart'a tıklandığında yapılacak işlem

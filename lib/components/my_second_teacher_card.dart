@@ -11,10 +11,12 @@ class MySecondTeacherCard extends StatefulWidget {
   final bool showContactInfo;
   final bool showIcons;
   final bool editmode;
+  final VoidCallback? onToggleContact;
 
   const MySecondTeacherCard({
     super.key,
     required this.teacher,
+    this.onToggleContact,
     this.editmode = true,
     this.showIcons = true,
     this.onTap,
@@ -131,9 +133,6 @@ class _MySecondTeacherCardState extends State<MySecondTeacherCard> {
                             widget.editmode
                                 ? Expanded(
                                     child: TextField(
-                                      cursorColor: Theme.of(context)
-                                          .colorScheme
-                                          .secondary,
                                       maxLines: 1,
                                       minLines: 1,
                                       style: Theme.of(context)
@@ -193,15 +192,29 @@ class _MySecondTeacherCardState extends State<MySecondTeacherCard> {
                         ),
                         SizedBox(height: 4.h),
                         // telefon bilgisi -- editmode -- gizle goster
-                        if (widget.showContactInfo)
-                          Row(
-                            children: [
+
+                        Row(
+                          children: [
+                            if (widget.editmode)
+                              GestureDetector(
+                                onTap: widget.onToggleContact,
+                                child: Icon(
+                                  widget.showContactInfo
+                                      ? Icons.visibility_outlined
+                                      : Icons.visibility_off_outlined,
+                                  size: 16.sp,
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                ),
+                              )
+                            else if (widget.showContactInfo)
                               Icon(
                                 Icons.phone_outlined,
                                 size: 16.sp,
                                 color: Theme.of(context).colorScheme.secondary,
                               ),
-                              SizedBox(width: 8.w),
+                            SizedBox(width: 8.w),
+                            if (widget.showContactInfo)
                               (widget.editmode
                                   ? Expanded(
                                       child: TextField(
@@ -255,8 +268,8 @@ class _MySecondTeacherCardState extends State<MySecondTeacherCard> {
                                                 .secondary,
                                           ),
                                     ))
-                            ],
-                          ),
+                          ],
+                        ),
                       ],
                     ),
                   ),

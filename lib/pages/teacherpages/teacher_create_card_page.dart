@@ -3,11 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:tutorapp_deneme/components/my_appbar_button.dart';
+import 'package:tutorapp_deneme/components/my_second_button.dart';
 import 'package:tutorapp_deneme/components/my_second_teacher_card.dart';
 import 'package:tutorapp_deneme/models/teacher.dart';
 import 'package:tutorapp_deneme/providers/teachers_provider.dart';
 
-enum InfoCardType { education, experience, location, price }
+enum InfoCardType {
+  education,
+  experience,
+  location,
+  price,
+}
 
 extension InfoCardTypeExtension on InfoCardType {
   String get title {
@@ -60,17 +66,34 @@ class TeacherCreateCardPage extends StatefulWidget {
 }
 
 class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
-  bool editMode = true;
+  late TextEditingController aboutController;
+  bool editMode = false;
   final List<InfoCardType> _activeCardTypes = [];
   final Map<InfoCardType, TextEditingController> _controllers = {};
   final Map<InfoCardType, String> _cardValues = {};
   bool _cardsInitialized = false;
+  bool showContactInfo = true;
+
+  _initializeControllers() {
+    final teacher = context.read<TeachersProvider>().currentTeacher;
+    if (teacher != null) {
+      aboutController = TextEditingController(text: teacher.bio ?? " ");
+    }
+  }
+
+  @override
+  void initState() {
+    _initializeControllers();
+    super.initState();
+  }
 
   @override
   void dispose() {
     for (final controller in _controllers.values) {
       controller.dispose();
     }
+    aboutController.dispose();
+
     super.dispose();
   }
 
@@ -118,8 +141,14 @@ class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
                     children: [
                       // Yeni MySecondTeacherCard component'i
                       MySecondTeacherCard(
+                        onToggleContact: () {
+                          setState(() {
+                            // İletişim bilgilerini göster/gizle
+                            showContactInfo = !showContactInfo;
+                          });
+                        },
                         showIcons: false,
-                        showContactInfo: true,
+                        showContactInfo: showContactInfo,
                         editmode: editMode,
                         teacher: teacher,
                         onTap: () {
@@ -173,6 +202,7 @@ class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
     );
   }
 
+  /// HAKKIMDA BÖLÜMÜ
   Widget _buildAboutSection() {
     final theme = Theme.of(context);
     final placeholder = 'Hakkınızda kısa bilgi yazınız';
@@ -194,7 +224,7 @@ class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
                   padding: EdgeInsets.all(14.r),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors.white.withOpacity(.9),
+                    color: Colors.white,
                   ),
                   child: Icon(
                     CupertinoIcons.person_crop_circle_fill,
@@ -207,28 +237,27 @@ class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
                   children: [
                     Text(
                       'Hakkımda',
-                      style:
-                          theme.textTheme.titleMedium?.copyWith(fontSize: 28.r),
+                      style: theme.textTheme.displayMedium,
                     ),
                     SizedBox(height: 4.h),
-                    Text(
-                      'Öğrencileriniz için kısa bir tanıtım ekleyin',
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: theme.colorScheme.onSurface.withOpacity(.6),
-                      ),
-                    ),
+                    Text('Öğrencileriniz için kısa bir tanıtım ekleyin',
+                        style: theme.textTheme.titleSmall),
                   ],
                 ),
               ],
             ),
             SizedBox(height: 16.h),
             editMode
-                ? DecoratedBox(
+                ? Container(
+                    constraints: BoxConstraints(
+                      minHeight: 100.h,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(18.r),
                     ),
                     child: TextField(
+                      controller: aboutController,
                       minLines: 3,
                       maxLines: null,
                       style: theme.textTheme.bodyMedium,
@@ -249,10 +278,20 @@ class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
                     ),
                   )
                 : Container(
+                    constraints: BoxConstraints(minHeight: 100.h),
                     width: double.infinity,
                     padding:
-                        EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
-                    child: Text(placeholder, style: theme.textTheme.bodyMedium),
+                        EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(18.r),
+                    ),
+                    child: Text(
+                      aboutController.text.isEmpty
+                          ? placeholder
+                          : aboutController.text,
+                      style: theme.textTheme.bodyMedium,
+                    ),
                   ),
           ],
         ),
@@ -260,6 +299,7 @@ class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
     );
   }
 
+// Edit modu geçişini yönetir
   void _handleEditModeToggle() {
     final provider = context.read<TeachersProvider>();
     if (editMode) {
@@ -279,6 +319,7 @@ class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
     });
   }
 
+// Kart değerlerini sağlayıcıya kaydeder
   void _persistCardValues(TeachersProvider provider) {
     final teacher = provider.currentTeacher;
     if (teacher == null) return;
@@ -310,6 +351,7 @@ class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
     );
   }
 
+// Kartları başlatır
   void _initializeCardsIfNeeded(Teacher teacher) {
     if (_cardsInitialized) return;
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -331,6 +373,7 @@ class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
     });
   }
 
+  // Günlük çip widget'ı
   Widget _dayChip(String day, bool available) {
     return Container(
       margin: const EdgeInsets.only(right: 8),
@@ -352,6 +395,7 @@ class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
     );
   }
 
+// Dinamik bilgi kartlarını oluşturur
   Widget _buildDynamicInfoCards(Teacher teacher) {
     if (_activeCardTypes.isEmpty) {
       return Padding(
@@ -414,42 +458,15 @@ class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
           ),
         ),
         if (editMode)
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 12.h),
-            child: SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  padding: EdgeInsets.symmetric(vertical: 18.h),
-                  backgroundColor:
-                      Theme.of(context).colorScheme.secondary.withOpacity(.9),
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.r),
-                  ),
-                ),
-                onPressed: () => _showCardPicker(teacher),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(CupertinoIcons.add_circled, size: 20.sp),
-                    SizedBox(width: 8.w),
-                    Text('Bilgi Kartı Ekle',
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleMedium
-                            ?.copyWith(color: Colors.white)),
-                  ],
-                ),
-              ),
-            ),
-          ),
+          MySecondButton(
+              text: "Bilgi Kartı Ekle",
+              icon: Icons.add_circle_outline,
+              onPressed: () => _showCardPicker(teacher)),
       ],
     );
   }
 
+// Dinamik düzenlenebilir bilgi kartı widget'ı
   Widget _EditableInfoCard({
     required InfoCardType type,
     required TextEditingController controller,
@@ -465,15 +482,8 @@ class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
         borderRadius: BorderRadius.circular(18.r),
         color: theme.colorScheme.surface,
         border: Border.all(
-          color: theme.colorScheme.secondary.withOpacity(.25),
+          color: theme.colorScheme.secondary,
         ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(.05),
-            blurRadius: 18,
-            offset: Offset(0, 8),
-          )
-        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -483,7 +493,7 @@ class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
               Container(
                 padding: EdgeInsets.all(10.r),
                 decoration: BoxDecoration(
-                  color: theme.colorScheme.secondary.withOpacity(.12),
+                  color: theme.colorScheme.onPrimary,
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
@@ -504,7 +514,7 @@ class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
                 onPressed: onRemove,
                 icon: Icon(
                   CupertinoIcons.trash,
-                  color: theme.colorScheme.error.withOpacity(.9),
+                  color: theme.colorScheme.error,
                   size: 20.sp,
                 ),
               ),
@@ -513,16 +523,15 @@ class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
           SizedBox(height: 12.h),
           DecoratedBox(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(14.r),
-              color: theme.colorScheme.surfaceTint.withOpacity(.06) ??
-                  theme.colorScheme.surface,
-            ),
+                borderRadius: BorderRadius.circular(14.r),
+                color: theme.colorScheme.surface),
             child: TextField(
               controller: controller,
               minLines: 1,
               maxLines: null,
               style: theme.textTheme.bodyMedium,
               decoration: InputDecoration(
+                isDense: true,
                 hintText: '${type.title} bilgisini giriniz',
                 contentPadding:
                     EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
@@ -547,6 +556,7 @@ class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
     );
   }
 
+// Dinamik salt okunur bilgi kartı widget'ı
   Widget _ReadOnlyInfoCard({
     required InfoCardType type,
     required String value,
@@ -558,21 +568,7 @@ class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
       padding: EdgeInsets.all(18.r),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.r),
-        gradient: LinearGradient(
-          colors: [
-            theme.colorScheme.secondary.withOpacity(.12),
-            theme.colorScheme.secondary.withOpacity(.04),
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: theme.colorScheme.secondary.withOpacity(.08),
-            blurRadius: 18,
-            offset: Offset(0, 10),
-          ),
-        ],
+        color: theme.colorScheme.surface,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -581,7 +577,7 @@ class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
             padding: EdgeInsets.all(12.r),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.white.withOpacity(.9),
+              color: Colors.white,
             ),
             child: Icon(
               type.icon,
@@ -600,14 +596,7 @@ class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
                   ),
                 ),
                 SizedBox(height: 6.h),
-                Text(
-                  displayValue,
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: displayValue == 'Bilgi girilmedi'
-                        ? theme.colorScheme.onSurface.withOpacity(.5)
-                        : theme.colorScheme.onSurface,
-                  ),
-                ),
+                Text(displayValue, style: theme.textTheme.bodyMedium),
               ],
             ),
           )
@@ -616,6 +605,7 @@ class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
     );
   }
 
+// Kart tipi seçiciyi gösterir
   void _showCardPicker(Teacher teacher) {
     final availableTypes = InfoCardType.values
         .where((type) => !_activeCardTypes.contains(type))
@@ -630,13 +620,13 @@ class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
       );
       return;
     }
-
+// Kart tipi seçiciyi gösterir
     showModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(32.r)),
       ),
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: Theme.of(context).colorScheme.onPrimary,
       builder: (sheetContext) {
         return Padding(
           padding: EdgeInsets.fromLTRB(20.w, 24.h, 20.w, 28.h),
@@ -650,10 +640,7 @@ class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
                     padding: EdgeInsets.all(10.r),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Theme.of(context)
-                          .colorScheme
-                          .secondary
-                          .withOpacity(.15),
+                      color: Theme.of(context).colorScheme.surface,
                     ),
                     child: Icon(
                       CupertinoIcons.layers_alt,
@@ -661,13 +648,8 @@ class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
                     ),
                   ),
                   SizedBox(width: 12.w),
-                  Text(
-                    'Kart Tipi Seçin',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleLarge
-                        ?.copyWith(fontWeight: FontWeight.w700),
-                  ),
+                  Text('Kart Tipi Seçin',
+                      style: Theme.of(context).textTheme.displayMedium),
                 ],
               ),
               SizedBox(height: 18.h),
@@ -686,10 +668,7 @@ class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
                           padding: EdgeInsets.all(16.r),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(18.r),
-                            color: Theme.of(context)
-                                .colorScheme
-                                .secondary
-                                .withOpacity(.08),
+                            color: Theme.of(context).colorScheme.surface,
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -758,6 +737,7 @@ class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
     });
   }
 
+// Kontrolör oluşturur
   TextEditingController _createController(InfoCardType type, Teacher teacher) {
     if (_controllers.containsKey(type)) {
       return _controllers[type]!;

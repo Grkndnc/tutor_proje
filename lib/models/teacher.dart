@@ -9,6 +9,7 @@ class Teacher {
   final String? education;
   final String? experience;
   final String? location;
+  final List<String>? availableDays;
   final String email;
   final String phone;
   final String? bio;
@@ -19,6 +20,7 @@ class Teacher {
     required this.name,
     required this.surname,
     required this.subject,
+    this.availableDays,
     this.bio,
     this.rating,
     this.price,
@@ -79,6 +81,7 @@ class Teacher {
     String? image,
     String? education,
     String? experience,
+    List<String>? availableDays,
     String? location,
     String? email,
     String? bio,
@@ -92,6 +95,7 @@ class Teacher {
       subject: subject ?? this.subject,
       rating: rating ?? this.rating,
       bio: bio ?? this.bio,
+      availableDays: availableDays ?? this.availableDays,
       price: price ?? this.price,
       image: image ?? this.image,
       education: education ?? this.education,

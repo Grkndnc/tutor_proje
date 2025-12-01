@@ -24,11 +24,10 @@ class MySecondButton extends StatelessWidget {
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
             backgroundColor: Theme.of(context).colorScheme.surface,
-            foregroundColor: Theme.of(context).colorScheme.secondary,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16.r),
             ),
-            elevation: 2,
+            elevation: 0,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

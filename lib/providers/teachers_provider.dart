@@ -20,6 +20,7 @@ class TeachersProvider with ChangeNotifier {
     location: 'İstanbul / Online',
     email: 'gurkan.dinc@email.com',
     phone: '+90 555 123 45 67',
+    availableDays: ['Pazartesi', 'Çarşamba', 'Cuma'],
     secondarySubjects: [
       'Fizik',
       'Biyoloji',
@@ -67,6 +68,10 @@ class TeachersProvider with ChangeNotifier {
       education: 'İTÜ Fizik Mühendisliği',
       experience: '5 yıl özel ders deneyimi',
       location: 'Ankara / Online',
+      availableDays: [
+        'Pazartesi',
+        'Çarşamba',
+      ],
       email: 'ayse.yilmaz@email.com',
       phone: '+90 555 987 65 43',
       secondarySubjects: ['Matematik', 'Kimya'],
@@ -84,6 +89,10 @@ class TeachersProvider with ChangeNotifier {
       location: 'İzmir / Online',
       email: 'mehmet.kaya@email.com',
       phone: '+90 555 456 78 90',
+      availableDays: [
+        'Pazartesi',
+        'Çarşamba',
+      ],
       secondarySubjects: ['Biyoloji', 'Fizik'],
     ),
   ];
