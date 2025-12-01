@@ -66,6 +66,7 @@ class TeacherCreateCardPage extends StatefulWidget {
 }
 
 class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
+  late TextEditingController availableDaysController;
   late TextEditingController aboutController;
   bool editMode = false;
   final List<InfoCardType> _activeCardTypes = [];
