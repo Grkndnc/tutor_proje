@@ -27,7 +27,7 @@ class MySecondButton extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16.r),
             ),
-            elevation: 0,
+            elevation: 2,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

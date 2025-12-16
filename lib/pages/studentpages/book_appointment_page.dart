@@ -96,11 +96,13 @@ class _BookAppointmentPageState extends State<BookAppointmentPage> {
                   child: Row(
                     children: [
                       CircleAvatar(
-                        backgroundColor:
-                            Theme.of(context).colorScheme.secondary,
-                        radius: 30.r,
-                        backgroundImage: AssetImage(
-                            currentTeacher.image ?? "/images/social.png"),
+                        radius: 32.r,
+                        backgroundColor: Colors.blueGrey.shade400,
+                        child: CircleAvatar(
+                          radius: 30.r,
+                          backgroundImage: AssetImage(
+                              currentTeacher.image ?? "images/defaultuser.jpg"),
+                        ),
                       ),
                       SizedBox(width: 16.w),
                       Expanded(

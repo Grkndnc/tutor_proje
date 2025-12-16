@@ -10,7 +10,7 @@ class Student {
   final String grade; // "11. Sınıf", "2. Sınıf" vb.
   final String image;
   final List<String> interests; // İlgi alanları/dersler
-  final String bio; // Hakkında kısa açıklama
+  final String? bio; // Hakkında kısa açıklama
 
   Student({
     required this.id,
@@ -24,7 +24,7 @@ class Student {
     required this.grade,
     required this.image,
     required this.interests,
-    required this.bio,
+    this.bio,
   });
 
   // JSON'dan Student objesi oluşturma

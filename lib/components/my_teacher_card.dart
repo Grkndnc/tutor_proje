@@ -21,6 +21,7 @@ class MyTeacherCard extends StatelessWidget {
         // ignore: unused_local_variable
         // final isFavorite = provider.isFavorite(teacher.id);
         return Card(
+          shadowColor: Colors.blueGrey,
           color: Colors.white,
           elevation: 2,
           child: Padding(
@@ -32,10 +33,14 @@ class MyTeacherCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     CircleAvatar(
-                      backgroundColor: Colors.white,
-                      radius: 40.r,
-                      backgroundImage:
-                          AssetImage(teacher.image ?? "/images/social.png"),
+                      radius: 42.r,
+                      backgroundColor: Colors.blueGrey.shade400,
+                      child: CircleAvatar(
+                        backgroundColor: Colors.white,
+                        radius: 40.r,
+                        backgroundImage: AssetImage(
+                            teacher.image ?? "images/defaultuser.jpg"),
+                      ),
                     ),
                     Text(
                       teacher.name,

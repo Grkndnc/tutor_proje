@@ -6,6 +6,7 @@ import 'package:tutorapp_deneme/components/my_category_card.dart';
 import 'package:tutorapp_deneme/components/my_teacher_card.dart';
 
 import 'package:tutorapp_deneme/pages/studentpages/tutor_resume_page.dart';
+import 'package:tutorapp_deneme/pages/teacherpages/teacher_notifications.dart';
 import 'package:tutorapp_deneme/providers/teachers_provider.dart';
 
 class TeacherHomePage extends StatefulWidget {
@@ -79,7 +80,16 @@ class _HomePageState extends State<TeacherHomePage> {
         ),
         automaticallyImplyLeading: false,
         actions: [
-          MyAppBarButton(icon: Icons.notifications, onTap: () {}),
+          MyAppBarButton(
+              icon: Icons.notifications,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TeacherNotificationsPage(),
+                  ),
+                );
+              }),
           Padding(
             padding: const EdgeInsets.only(right: 8).r,
             child: CircleAvatar(
@@ -91,8 +101,8 @@ class _HomePageState extends State<TeacherHomePage> {
                               .watch<TeachersProvider>()
                               .currentTeacher!
                               .image ??
-                          "images/social.png")
-                      : AssetImage("images/social.png"),
+                          "images/defaultuser.jpg")
+                      : AssetImage("images/defaultuser.jpg"),
             ),
           ),
         ],

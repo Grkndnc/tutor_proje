@@ -5,7 +5,7 @@ class EditableInfoField extends StatelessWidget {
   final IconData icon;
   final String title;
   final String value;
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final bool isEditing;
   final TextInputType? keyboardType;
   final int? maxLines;
@@ -15,7 +15,7 @@ class EditableInfoField extends StatelessWidget {
     required this.icon,
     required this.title,
     required this.value,
-    required this.controller,
+    this.controller,
     required this.isEditing,
     this.keyboardType,
     this.maxLines,
@@ -56,13 +56,7 @@ class EditableInfoField extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    title,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: Theme.of(context).colorScheme.onSurface,
-                        ),
-                  ),
+                  Text(title, style: Theme.of(context).textTheme.titleMedium),
                   SizedBox(height: 6.h),
                   if (isEditing)
                     TextField(

@@ -1,10 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:tutorapp_deneme/components/about_section.dart';
+import 'package:tutorapp_deneme/components/day_selector.dart';
 import 'package:tutorapp_deneme/components/my_appbar_button.dart';
 import 'package:tutorapp_deneme/components/my_second_button.dart';
 import 'package:tutorapp_deneme/components/my_second_teacher_card.dart';
+import 'package:tutorapp_deneme/components/my_show_dialog.dart';
 import 'package:tutorapp_deneme/models/teacher.dart';
 import 'package:tutorapp_deneme/providers/teachers_provider.dart';
 
@@ -66,19 +70,18 @@ class TeacherCreateCardPage extends StatefulWidget {
 }
 
 class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
-  late TextEditingController availableDaysController;
   late TextEditingController aboutController;
+
   bool editMode = false;
   final List<InfoCardType> _activeCardTypes = [];
   final Map<InfoCardType, TextEditingController> _controllers = {};
   final Map<InfoCardType, String> _cardValues = {};
-  bool _cardsInitialized = false;
   bool showContactInfo = true;
 
   _initializeControllers() {
     final teacher = context.read<TeachersProvider>().currentTeacher;
     if (teacher != null) {
-      aboutController = TextEditingController(text: teacher.bio ?? " ");
+      aboutController = TextEditingController(text: teacher.bio);
     }
   }
 
@@ -93,6 +96,7 @@ class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
     for (final controller in _controllers.values) {
       controller.dispose();
     }
+
     aboutController.dispose();
 
     super.dispose();
@@ -120,7 +124,6 @@ class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
       body: Consumer<TeachersProvider>(
         builder: (context, provider, child) {
           final teacher = provider.currentTeacher!;
-          _initializeCardsIfNeeded(teacher);
 
           return Padding(
             padding: EdgeInsets.only(top: 25.r),
@@ -152,16 +155,14 @@ class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
                         showContactInfo: showContactInfo,
                         editmode: editMode,
                         teacher: teacher,
-                        onTap: () {
-                          // Kart'a tıklandığında yapılacak işlem
-                        },
                       ),
-                      _buildAboutSection(),
-
-                      SizedBox(height: 20.h),
-
+                      AboutSection(
+                        aboutText: teacher.bio,
+                        editMode: editMode,
+                        aboutController: aboutController,
+                      ),
                       AnimatedSwitcher(
-                        duration: Duration(milliseconds: 300),
+                        duration: Duration(milliseconds: 400),
                         child: _buildDynamicInfoCards(teacher),
                       ),
                       Padding(
@@ -170,25 +171,118 @@ class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Müsaitlik Takvimi",
-                                style:
-                                    Theme.of(context).textTheme.displayMedium),
-                            SizedBox(height: 8.h),
-                            SizedBox(
-                              height: 50.h,
-                              child: ListView(
-                                scrollDirection: Axis.horizontal,
-                                children: [
-                                  _dayChip("Pazartesi", true),
-                                  _dayChip("Salı", false),
-                                  _dayChip("Çarşamba", true),
-                                  _dayChip("Perşembe", false),
-                                  _dayChip("Cuma", true),
-                                  _dayChip("Cumartesi", true),
-                                  _dayChip("Pazar", false),
-                                ],
-                              ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text("Müsaitlik Takvimi",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .displayMedium),
+                                Row(
+                                  children: [
+                                    Container(
+                                      height: 16.h,
+                                      width: 10.w,
+                                      decoration: BoxDecoration(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .surface),
+                                    ),
+                                    SizedBox(
+                                      width: 5.w,
+                                    ),
+                                    Text(
+                                      ': Müsait',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall,
+                                    ),
+                                    SizedBox(
+                                      width: 15.w,
+                                    ),
+                                    Container(
+                                      height: 16.h,
+                                      width: 10.w,
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey.shade400),
+                                    ),
+                                    SizedBox(
+                                      width: 5.w,
+                                    ),
+                                    Text(
+                                      ': Müsait değil',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall,
+                                    )
+                                  ],
+                                ),
+                              ],
                             ),
+                            SizedBox(height: 8.h),
+                            DaySelector(
+                              currenTeacher: teacher,
+                              editable: editMode,
+                            ),
+                            SizedBox(height: 18.h),
+                            MySecondButton(
+                              text: "Kartini olustur",
+                              icon: CupertinoIcons.add_circled,
+                              onPressed: () {
+                                if (editMode) {
+                                  return;
+                                }
+                                MyShowDialog.show(
+                                    context: context,
+                                    title: "Kartınız oluşturuluyor...",
+                                    content:
+                                        "Kartınız oluşturulacak onaylıyor musunuz ?",
+                                    onConfirm: () {
+                                      // Kosullar eklenecek  /////...............
+
+                                      showDialog(
+                                        barrierDismissible: false,
+                                        context: context,
+                                        builder: (context) => AlertDialog(
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: Text(
+                                                "Tamam",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium,
+                                              ),
+                                            ),
+                                          ],
+                                          title: Text("Başarılı"),
+                                          content: Text(
+                                              "Kartınız başarıyla oluşturuldu."),
+                                          icon: Animate(
+                                            effects: [
+                                              ScaleEffect(
+                                                  duration: Duration(
+                                                      milliseconds: 800)),
+                                              FadeEffect()
+                                            ],
+                                            child: Icon(
+                                              size: 48.sp,
+                                              Icons
+                                                  .check_circle_outline_rounded,
+                                              color: Colors.green.shade600,
+                                            ),
+                                          ),
+                                        ),
+                                      );
+
+                                      provider.addTeacher(teacher);
+                                    },
+                                    confirmText: "Onayla",
+                                    cancelText: "İptal");
+                              },
+                            )
                           ],
                         ),
                       ),
@@ -204,101 +298,6 @@ class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
   }
 
   /// HAKKIMDA BÖLÜMÜ
-  Widget _buildAboutSection() {
-    final theme = Theme.of(context);
-    final placeholder = 'Hakkınızda kısa bilgi yazınız';
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 8.h),
-      child: Container(
-        width: double.infinity,
-        padding: EdgeInsets.all(20.r),
-        decoration: BoxDecoration(
-          color: theme.colorScheme.surface,
-          borderRadius: BorderRadius.circular(28.r),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Container(
-                  padding: EdgeInsets.all(14.r),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white,
-                  ),
-                  child: Icon(
-                    CupertinoIcons.person_crop_circle_fill,
-                    color: theme.colorScheme.secondary,
-                  ),
-                ),
-                SizedBox(width: 14.w),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Hakkımda',
-                      style: theme.textTheme.displayMedium,
-                    ),
-                    SizedBox(height: 4.h),
-                    Text('Öğrencileriniz için kısa bir tanıtım ekleyin',
-                        style: theme.textTheme.titleSmall),
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(height: 16.h),
-            editMode
-                ? Container(
-                    constraints: BoxConstraints(
-                      minHeight: 100.h,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(18.r),
-                    ),
-                    child: TextField(
-                      controller: aboutController,
-                      minLines: 3,
-                      maxLines: null,
-                      style: theme.textTheme.bodyMedium,
-                      decoration: InputDecoration(
-                        hintText: placeholder,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(18.r),
-                          borderSide: BorderSide.none,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(18.r),
-                          borderSide: BorderSide(
-                              color: theme.colorScheme.secondary, width: 1.2),
-                        ),
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 16.w, vertical: 18.h),
-                      ),
-                    ),
-                  )
-                : Container(
-                    constraints: BoxConstraints(minHeight: 100.h),
-                    width: double.infinity,
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(18.r),
-                    ),
-                    child: Text(
-                      aboutController.text.isEmpty
-                          ? placeholder
-                          : aboutController.text,
-                      style: theme.textTheme.bodyMedium,
-                    ),
-                  ),
-          ],
-        ),
-      ),
-    );
-  }
 
 // Edit modu geçişini yönetir
   void _handleEditModeToggle() {
@@ -337,6 +336,7 @@ class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
     }
 
     provider.updateTeacherDetails(
+      bio: aboutController.text,
       education: _activeCardTypes.contains(InfoCardType.education)
           ? valueFor(InfoCardType.education)
           : '',
@@ -352,60 +352,16 @@ class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
     );
   }
 
-// Kartları başlatır
-  void _initializeCardsIfNeeded(Teacher teacher) {
-    if (_cardsInitialized) return;
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!mounted || _cardsInitialized) return;
-      final defaults = InfoCardType.values.where((type) {
-        final value = type.initialValue(teacher);
-        return value != null && value.trim().isNotEmpty;
-      }).toList();
-
-      setState(() {
-        for (final type in defaults) {
-          if (!_activeCardTypes.contains(type)) {
-            _activeCardTypes.add(type);
-            _createController(type, teacher);
-          }
-        }
-        _cardsInitialized = true;
-      });
-    });
-  }
-
-  // Günlük çip widget'ı
-  Widget _dayChip(String day, bool available) {
-    return Container(
-      margin: const EdgeInsets.only(right: 8),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: BoxDecoration(
-        color: available
-            ? Theme.of(context).colorScheme.surface
-            : Colors.grey[300],
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Center(
-        child: Text(
-          day,
-          style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-        ),
-      ),
-    );
-  }
-
 // Dinamik bilgi kartlarını oluşturur
   Widget _buildDynamicInfoCards(Teacher teacher) {
     if (_activeCardTypes.isEmpty) {
       return Padding(
         padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 12.h),
         child: GestureDetector(
-          onTap: () => _showCardPicker(teacher),
+          onTap: () => editMode ? _showCardPicker(teacher) : {},
           child: Container(
             width: double.infinity,
-            padding: EdgeInsets.symmetric(vertical: 48.h, horizontal: 24.w),
+            padding: EdgeInsets.symmetric(vertical: 28.h, horizontal: 24.w),
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.surface,
               borderRadius: BorderRadius.circular(28.r),
@@ -468,6 +424,7 @@ class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
   }
 
 // Dinamik düzenlenebilir bilgi kartı widget'ı
+  // ignore: non_constant_identifier_names
   Widget _EditableInfoCard({
     required InfoCardType type,
     required TextEditingController controller,
@@ -558,6 +515,7 @@ class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
   }
 
 // Dinamik salt okunur bilgi kartı widget'ı
+  // ignore: non_constant_identifier_names
   Widget _ReadOnlyInfoCard({
     required InfoCardType type,
     required String value,
@@ -730,11 +688,9 @@ class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
   }
 
   void _removeCard(InfoCardType type) {
-    final controller = _controllers.remove(type);
-    controller?.dispose();
     setState(() {
       _activeCardTypes.remove(type);
-      _cardValues.remove(type);
+      // providerde remove oluyor duzeltme olabilir.....!
     });
   }
 
@@ -747,7 +703,7 @@ class _TeacherCreateCardPageState extends State<TeacherCreateCardPage> {
     final controller = TextEditingController(
       text: _cardValues[type] ?? type.initialValue(teacher) ?? '',
     );
-
+// PROBLEM VAR SONRA BAK ! (PROVIDERI NULL ATIYOR)
     controller.addListener(() {
       _cardValues[type] = controller.text;
     });

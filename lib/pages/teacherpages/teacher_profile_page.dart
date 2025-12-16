@@ -46,7 +46,8 @@ class TeacherProfilePage extends StatelessWidget {
                   backgroundColor: Colors.blueGrey.shade400,
                   child: CircleAvatar(
                     radius: 65.r,
-                    child: Image.asset(teacher?.image ?? "images/social.png"),
+                    backgroundImage:
+                        AssetImage(teacher?.image ?? "images/defaultuser.jpg"),
                   ),
                 ),
               ),
@@ -76,14 +77,15 @@ class TeacherProfilePage extends StatelessWidget {
                       width: 100.w,
                       height: 50.h,
                       decoration: BoxDecoration(
-                        border: Border.all(width: 1,color: Theme.of(context).colorScheme.secondary),
-                        
+                          border: Border.all(
+                              width: 1,
+                              color: Theme.of(context).colorScheme.secondary),
                           borderRadius: BorderRadius.circular(12.r),
                           color: Theme.of(context).colorScheme.surface),
                       child: Center(
                         child: Text(
                           "Profili Düzenle",
-                          style: Theme.of(context).textTheme.bodyMedium,
+                          style: Theme.of(context).textTheme.titleSmall,
                         ),
                       ),
                     ),
@@ -93,8 +95,8 @@ class TeacherProfilePage extends StatelessWidget {
               Align(
                 alignment: Alignment.center,
                 child: Padding(
-                  padding: EdgeInsets.only(
-                      left: 10.r, bottom: 10.r, right: 10.r),
+                  padding:
+                      EdgeInsets.only(left: 10.r, bottom: 10.r, right: 10.r),
                   child: Container(
                     height: 200.r,
                     decoration: BoxDecoration(
@@ -217,11 +219,15 @@ class ProfileBox extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Icon(icon, color: Theme.of(context).colorScheme.secondary),
-                SizedBox(width: 10.r),
+                Icon(
+                  icon,
+                  color: Theme.of(context).colorScheme.secondary,
+                  size: 26.sp,
+                ),
+                SizedBox(width: 12.r),
                 Text(
                   text,
-                  style: Theme.of(context).textTheme.bodyLarge,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ],
             ),

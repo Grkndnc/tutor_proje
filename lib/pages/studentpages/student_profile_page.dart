@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:tutorapp_deneme/components/about_section.dart';
 import 'package:tutorapp_deneme/providers/student_provider.dart';
 import 'package:tutorapp_deneme/components/student_profile_card.dart';
 import 'package:tutorapp_deneme/components/editable_info_field.dart';
@@ -82,6 +83,7 @@ class _StudentProfilePageState extends State<StudentProfilePage> {
                     if (isEditing) {
                       _saveChanges(provider);
                     }
+
                     isEditing = !isEditing;
                   });
                 },
@@ -127,69 +129,11 @@ class _StudentProfilePageState extends State<StudentProfilePage> {
                       // Profil Resmi ve Temel Bilgiler
                       StudentProfileCard(student: student),
 
-                      SizedBox(height: 20.h),
-
                       // Hakkında Bölümü
-                      Text(
-                        "Hakkında",
-                        style: Theme.of(context).textTheme.displayMedium,
-                      ),
-                      SizedBox(height: 8.h),
-
-                      if (isEditing)
-                        Container(
-                          padding: EdgeInsets.all(16.r),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12.r),
-                            color: Theme.of(context).colorScheme.surface,
-                            border: Border.all(
-                              color: Theme.of(context).colorScheme.secondary,
-                              width: 2,
-                            ),
-                          ),
-                          child: TextField(
-                            controller: bioController,
-                            maxLines: 3,
-                            decoration: InputDecoration(
-                              hintText:
-                                  "Kendiniz hakkında kısa bir açıklama yazın...",
-                              border: InputBorder.none,
-                              hintStyle: TextStyle(
-                                color: Theme.of(context).colorScheme.onSurface,
-                              ),
-                            ),
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
-                                ?.copyWith(
-                                  color:
-                                      Theme.of(context).colorScheme.onSurface,
-                                ),
-                          ),
-                        )
-                      else
-                        Container(
-                          padding: EdgeInsets.all(16.r),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12.r),
-                            color: Theme.of(context).colorScheme.surface,
-                            border: Border.all(
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                          ),
-                          child: Text(
-                            student.bio,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
-                                ?.copyWith(
-                                  color:
-                                      Theme.of(context).colorScheme.onSurface,
-                                ),
-                          ),
-                        ),
-
-                      SizedBox(height: 20.h),
+                      AboutSection(
+                          aboutText: student.bio ?? "",
+                          editMode: isEditing,
+                          aboutController: bioController),
 
                       // Kişisel Bilgiler
                       Text(

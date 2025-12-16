@@ -25,7 +25,6 @@ class StudentProvider with ChangeNotifier {
       'Tarih',
       'Coğrafya'
     ],
-    bio: 'Merhaba! Ben 11. sınıf öğrencisiyim. Matematik ve fen bilimlerine ilgim var. Üniversite sınavına hazırlanıyorum.',
   );
 
   // Getter'lar
@@ -101,7 +100,8 @@ class StudentProvider with ChangeNotifier {
   // Öğrenci eğitim seviyesini güncelleme
   void updateEducationLevel(String educationLevel) {
     if (_currentStudent != null) {
-      _currentStudent = _currentStudent!.copyWith(educationLevel: educationLevel);
+      _currentStudent =
+          _currentStudent!.copyWith(educationLevel: educationLevel);
       notifyListeners();
     }
   }
@@ -140,8 +140,10 @@ class StudentProvider with ChangeNotifier {
 
   // İlgi alanı ekleme
   void addInterest(String interest) {
-    if (_currentStudent != null && !_currentStudent!.interests.contains(interest)) {
-      final updatedInterests = List<String>.from(_currentStudent!.interests)..add(interest);
+    if (_currentStudent != null &&
+        !_currentStudent!.interests.contains(interest)) {
+      final updatedInterests = List<String>.from(_currentStudent!.interests)
+        ..add(interest);
       _currentStudent = _currentStudent!.copyWith(interests: updatedInterests);
       notifyListeners();
     }
@@ -150,7 +152,8 @@ class StudentProvider with ChangeNotifier {
   // İlgi alanı çıkarma
   void removeInterest(String interest) {
     if (_currentStudent != null) {
-      final updatedInterests = List<String>.from(_currentStudent!.interests)..remove(interest);
+      final updatedInterests = List<String>.from(_currentStudent!.interests)
+        ..remove(interest);
       _currentStudent = _currentStudent!.copyWith(interests: updatedInterests);
       notifyListeners();
     }

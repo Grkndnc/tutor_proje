@@ -30,13 +30,6 @@ class MySecondTeacherCard extends StatefulWidget {
 class _MySecondTeacherCardState extends State<MySecondTeacherCard> {
   bool showAllSubjects = false;
 
-  late TextEditingController nameController;
-  late TextEditingController surnameController;
-  late TextEditingController emailController;
-  late TextEditingController phoneController;
-  late TextEditingController subjectController;
-  late TextEditingController imageController;
-  late TextEditingController secondaySubjectController;
   late List<String> localSecondarySubjects;
 
   @override
@@ -45,8 +38,6 @@ class _MySecondTeacherCardState extends State<MySecondTeacherCard> {
     localSecondarySubjects = widget.teacher.secondarySubjects != null
         ? List.from(widget.teacher.secondarySubjects!)
         : [];
-
-    _initializeControllers();
   }
 
   void _addSubject(String subject) {
@@ -54,6 +45,7 @@ class _MySecondTeacherCardState extends State<MySecondTeacherCard> {
       setState(() {
         localSecondarySubjects.add(subject);
       });
+      saveProvider();
     }
   }
 
@@ -62,15 +54,15 @@ class _MySecondTeacherCardState extends State<MySecondTeacherCard> {
       setState(() {
         localSecondarySubjects.remove(subject);
       });
+      saveProvider();
     }
   }
 
-  void _initializeControllers() {
-    nameController = TextEditingController(text: widget.teacher.name);
-    surnameController = TextEditingController(text: widget.teacher.surname);
-    emailController = TextEditingController(text: widget.teacher.email);
-    phoneController = TextEditingController(text: widget.teacher.phone);
-    subjectController = TextEditingController(text: widget.teacher.subject);
+//
+  void saveProvider() {
+    context
+        .read<TeachersProvider>()
+        .updateTeacherDetails(secondarySubjects: localSecondarySubjects);
   }
 
   @override
@@ -89,25 +81,18 @@ class _MySecondTeacherCardState extends State<MySecondTeacherCard> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
-                    width: 100.w,
-                    height: 100.h,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        width: 2.w,
-                        color: Theme.of(context).colorScheme.secondary,
-                      ),
-                      borderRadius: BorderRadius.circular(16.r),
-                      image: DecorationImage(
-                        image: AssetImage(
-                            widget.teacher.image ?? "images/social.png"),
-                        fit: BoxFit.fill,
-                      ),
+                  CircleAvatar(
+                    radius: 50.r,
+                    backgroundColor: Colors.blueGrey.shade400,
+                    child: CircleAvatar(
+                      radius: 48.r,
+                      backgroundImage: AssetImage(
+                          widget.teacher.image ?? "images/defaultuser.jpg"),
                     ),
                   ),
-                  SizedBox(width: 16.w),
+                  SizedBox(width: 12.w),
 
                   // İsim ve iletişim bilgileri
                   Expanded(
@@ -130,64 +115,17 @@ class _MySecondTeacherCardState extends State<MySecondTeacherCard> {
                               color: Theme.of(context).colorScheme.secondary,
                             ),
                             SizedBox(width: 8.w),
-                            widget.editmode
-                                ? Expanded(
-                                    child: TextField(
-                                      maxLines: 1,
-                                      minLines: 1,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall
-                                          ?.copyWith(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .secondary,
-                                          ),
-                                      controller: emailController,
-                                      decoration: InputDecoration(
-                                        isDense: true,
-                                        contentPadding: EdgeInsets.all(4.r),
-                                        hintText: "Email yazınız",
-                                        hintStyle: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall
-                                            ?.copyWith(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .secondary,
-                                            ),
-                                        focusedBorder: OutlineInputBorder(
-                                          gapPadding: 3,
-                                          borderSide: BorderSide(
-                                              width: 1, color: Colors.black),
-                                          borderRadius:
-                                              BorderRadius.circular(6),
-                                        ),
-                                        enabledBorder: OutlineInputBorder(
-                                          gapPadding: 3,
-                                          borderSide: BorderSide(
-                                              width: 1,
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .secondary),
-                                          borderRadius:
-                                              BorderRadius.circular(6.r),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                : Text(
-                                    widget.teacher.email,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall
-                                        ?.copyWith(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .secondary,
-                                        ),
-                                    overflow: TextOverflow.ellipsis,
+                            Text(
+                              widget.teacher.email,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall
+                                  ?.copyWith(
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
                                   ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ],
                         ),
                         SizedBox(height: 4.h),
@@ -215,59 +153,17 @@ class _MySecondTeacherCardState extends State<MySecondTeacherCard> {
                               ),
                             SizedBox(width: 8.w),
                             if (widget.showContactInfo)
-                              (widget.editmode
-                                  ? Expanded(
-                                      child: TextField(
-                                        maxLines: 1,
-                                        minLines: 1,
-                                        controller: phoneController,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall
-                                            ?.copyWith(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .secondary,
-                                            ),
-                                        decoration: InputDecoration(
-                                          isDense: true,
-                                          contentPadding: EdgeInsets.all(4.r),
-                                          hintText:
-                                              "Telefon Numaranızı yazınız",
-                                          hintStyle: Theme.of(context)
-                                              .textTheme
-                                              .bodySmall
-                                              ?.copyWith(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .secondary,
-                                              ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                width: 1, color: Colors.black),
-                                          ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              width: 1,
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .secondary,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  : Text(
-                                      widget.teacher.phone,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall
-                                          ?.copyWith(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .secondary,
-                                          ),
-                                    ))
+                              Text(
+                                widget.teacher.phone,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall
+                                    ?.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
+                                    ),
+                              )
                           ],
                         ),
                       ],

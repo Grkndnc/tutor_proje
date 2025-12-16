@@ -123,14 +123,13 @@ class _TeacherProfileEditPageState extends State<TeacherProfileEditPage> {
                                   onPressed: () {
                                     setState(() {
                                       if (isEditing1) {
-                                        provider.uptadeTeacherName(
-                                            nameController.text);
-                                        provider.updateTeacherSurname(
-                                            surnameController.text);
-                                        provider.updateTeacheremail(
-                                            emailController.text);
-                                        provider.updateTeacherphone(
-                                            phoneController.text);
+                                        provider.updateTeacherDetails(
+                                          name: nameController.text,
+                                          surname: surnameController.text,
+                                          email: emailController.text,
+                                          phone: phoneController.text,
+                                        );
+
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           SnackBar(
@@ -206,8 +205,8 @@ class _TeacherProfileEditPageState extends State<TeacherProfileEditPage> {
                                   onPressed: () {
                                     setState(() {
                                       if (isEditing2) {
-                                        provider.updateTeacherAdress(
-                                            adressController.text);
+                                        provider.updateTeacherDetails(
+                                            location: adressController.text);
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           SnackBar(
@@ -255,12 +254,12 @@ class _TeacherProfileEditPageState extends State<TeacherProfileEditPage> {
                                   onPressed: () {
                                     setState(() {
                                       if (isEditing3) {
-                                        provider.uptadeTeacherEducation(
-                                            educationController.text);
-                                        provider.uptadeTeacherExperience(
-                                            experienceController.text);
-                                        provider.uptadeTeacherSubject(
-                                            subjectController.text);
+                                        provider.updateTeacherDetails(
+                                            education: educationController.text,
+                                            experience:
+                                                experienceController.text,
+                                            subject: subjectController.text);
+
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           SnackBar(
@@ -336,9 +335,8 @@ class _TeacherProfileEditPageState extends State<TeacherProfileEditPage> {
                         child: CircleAvatar(
                           radius: 65.r,
                           backgroundColor: Colors.white,
-                          child: Image.asset(
-                            teacher.image ?? "images/social.png",
-                          ),
+                          backgroundImage: AssetImage(
+                              teacher.image ?? "images/defaultuser.jpg"),
                         ),
                       ),
                       Positioned(
@@ -350,7 +348,6 @@ class _TeacherProfileEditPageState extends State<TeacherProfileEditPage> {
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: Colors.blueGrey.shade100,
-                              
                             ),
                             child: Center(
                               child: Icon(

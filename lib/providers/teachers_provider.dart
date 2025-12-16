@@ -6,29 +6,24 @@ class TeachersProvider with ChangeNotifier {
   final List<Teacher> _favoriteTeachers = [];
   Teacher? _currentTeacher;
 
-// Örnek bir Kullanıcı (Öğretmen) verileri UI doğru ak için
+// Örnek bir Kullanıcı (Öğretmen) verileri UI doğru akitmasi için
   final Teacher _defaultTeacher = Teacher(
-    id: '1',
+    id: '4',
     name: 'Gürkan',
     surname: "DİNÇ",
     subject: 'Matematik',
     rating: '4.7',
-    bio: "Yıllardır özel ders tecrübem ile buradayım",
     price: '350 TRY/Sa',
     education: 'ODTÜ Matematik, Yüksek Lisans - Eğitim Bilimleri',
     experience: '7 yıl özel ders deneyimi',
     location: 'İstanbul / Online',
     email: 'gurkan.dinc@email.com',
     phone: '+90 555 123 45 67',
-    availableDays: ['Pazartesi', 'Çarşamba', 'Cuma'],
+    availableDays: ['Pazartesi', 'Çarşamba', 'Cuma', 'Cumartesi'],
     secondarySubjects: [
       'Fizik',
       'Biyoloji',
       'Kimya',
-      'Edebiyat',
-      'Tarih',
-      'Coğrafya',
-      'İngilizce'
     ],
   );
 
@@ -107,16 +102,27 @@ class TeachersProvider with ChangeNotifier {
     _currentTeacher = _defaultTeacher;
   }
 
-  void updateTeacher(Teacher teacher) {
-    _currentTeacher = teacher;
-    notifyListeners();
-  }
-
   bool get isLoggedIn => _currentTeacher != null;
 
   // Öğretmenin favori olup olmadığını kontrol etme
   bool isFavorite(String teacherId) {
     return _favoriteTeachers.any((teacher) => teacher.id == teacherId);
+  }
+
+  ///////////////Musait gunler sectirme fonksiyonu/////////////////////////
+  void toggledays(d) {
+    final days = List<String>.from(currentTeacher!.availableDays ?? []);
+    if (days.contains(d)) {
+      days.remove(d);
+    } else {
+      days.add(d);
+    }
+    final updated = _currentTeacher!.copyWith(availableDays: days);
+
+    // allteachers listesinden ve availabledays kismini guncelle !!
+    updateTeacher(updated);
+
+    notifyListeners();
   }
 
   // Favorilere ekleme
@@ -153,84 +159,52 @@ class TeachersProvider with ChangeNotifier {
 
 /////////////////////////////////////////  Güncellemeler  ///////////////////////////////
 
-  // Öğretmen ismi Güncelleme
-  void uptadeTeacherName(String newName) {
-    if (currentTeacher != null) {
-      _currentTeacher = _currentTeacher!.copyWith(name: newName);
-    }
-    notifyListeners();
-  }
-
-  //Öğretmen Soyad Güncelleme
-  void updateTeacherSurname(String newSurname) {
-    if (currentTeacher != null) {
-      _currentTeacher = _currentTeacher!.copyWith(surname: newSurname);
-    }
-    notifyListeners();
-  }
-
-  //Öğretmen mail Güncelleme
-  void updateTeacheremail(String newEmail) {
-    if (currentTeacher != null) {
-      _currentTeacher = _currentTeacher!.copyWith(email: newEmail);
-    }
-
-    notifyListeners();
-  }
-
-  //Öğretmen telefon Güncelleme
-  void updateTeacherphone(String newPhone) {
-    if (currentTeacher != null) {
-      _currentTeacher = _currentTeacher!.copyWith(phone: newPhone);
-    }
-    notifyListeners();
-  }
-
-  //Öğretmen adres Güncelleme
-  void updateTeacherAdress(String newAdress) {
-    if (currentTeacher != null) {
-      _currentTeacher = _currentTeacher!.copyWith(location: newAdress);
-    }
-    notifyListeners();
-  }
-
-  //Öğretmen Ana Branşlar Güncelleme
-  void uptadeTeacherSubject(String newSubject) {
-    if (currentTeacher != null) {
-      _currentTeacher = _currentTeacher!.copyWith(subject: newSubject);
-    }
-    notifyListeners();
-  }
-
-  //Öğretmen deneyim Güncelleme
-  void uptadeTeacherExperience(String newExperience) {
-    if (currentTeacher != null) {
-      _currentTeacher = _currentTeacher!.copyWith(experience: newExperience);
-    }
-    notifyListeners();
-  }
-
-  //Öğretmen eğitim Güncelleme
-  void uptadeTeacherEducation(String newEducation) {
-    if (currentTeacher != null) {
-      _currentTeacher = _currentTeacher!.copyWith(education: newEducation);
-    }
-    notifyListeners();
-  }
-
   void updateTeacherDetails({
+    String? name,
+    String? surname,
+    String? email,
+    String? phone,
     String? education,
     String? experience,
     String? location,
     String? price,
+    String? bio,
+    String? subject,
+    List<String>? availableDays,
+    List<String>? secondarySubjects,
   }) {
     if (_currentTeacher == null) return;
-    _currentTeacher = _currentTeacher!.copyWith(
+    final uptadedTeacher = _currentTeacher!.copyWith(
+      name: name ?? currentTeacher!.name,
+      surname: surname ?? _currentTeacher!.surname,
+      email: email ?? _currentTeacher!.email,
+      phone: phone ?? _currentTeacher!.phone,
       education: education ?? _currentTeacher!.education,
       experience: experience ?? _currentTeacher!.experience,
       location: location ?? _currentTeacher!.location,
       price: price ?? _currentTeacher!.price,
+      bio: bio ?? _currentTeacher!.bio,
+      subject: subject ?? _currentTeacher!.subject,
+      availableDays: availableDays ?? _currentTeacher!.availableDays,
+      secondarySubjects:
+          secondarySubjects ?? _currentTeacher!.secondarySubjects,
     );
+    updateTeacher(uptadedTeacher);
+    notifyListeners();
+  }
+
+// Listedeki ogrtetmeni bulur
+  void uptadeTeacherInList(Teacher uptadedTeacher) {
+    final index = _allTeachers.indexWhere((t) => t.id == uptadedTeacher.id);
+    if (index != -1) {
+      _allTeachers[index] = uptadedTeacher;
+    }
+  }
+
+//listedeki ogretmeni guceller
+  void updateTeacher(Teacher teacher) {
+    _currentTeacher = teacher;
+    uptadeTeacherInList(teacher);
     notifyListeners();
   }
 
@@ -242,6 +216,8 @@ class TeachersProvider with ChangeNotifier {
   }
 
   void addTeacher(Teacher teacher) {
+    final exists = _allTeachers.any((existing) => existing.id == teacher.id);
+    if (exists) return;
     _allTeachers.add(teacher);
     notifyListeners();
   }

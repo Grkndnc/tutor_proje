@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
-import 'package:tutorapp_deneme/components/info_card.dart';
+import 'package:tutorapp_deneme/components/about_section.dart';
+import 'package:tutorapp_deneme/components/day_selector.dart';
+import 'package:tutorapp_deneme/components/editable_info_field.dart';
 import 'package:tutorapp_deneme/components/my_second_button.dart';
 import 'package:tutorapp_deneme/components/my_second_teacher_card.dart';
 import 'package:tutorapp_deneme/models/teacher.dart';
 import 'package:tutorapp_deneme/pages/studentpages/book_appointment_page.dart';
-import 'package:tutorapp_deneme/providers/teachers_provider.dart';
 
 class TutorResumePage extends StatefulWidget {
   final Teacher? teacher;
@@ -27,6 +27,7 @@ class _TutorResumePageState extends State<TutorResumePage> {
   @override
   void initState() {
     super.initState();
+
     // Eğer parametre olarak öğretmen geldiyse onu kullan, yoksa varsayılan öğretmen
     currentTeacher = widget.teacher ??
         Teacher(
@@ -56,7 +57,6 @@ class _TutorResumePageState extends State<TutorResumePage> {
 
   @override
   Widget build(BuildContext context) {
-    final currentTeacher1 = context.watch<TeachersProvider>().currentTeacher;
     return Scaffold(
       appBar: AppBar(
         iconTheme:
@@ -95,40 +95,40 @@ class _TutorResumePageState extends State<TutorResumePage> {
                     },
                   ),
 
+                  if ((currentTeacher.bio ?? "").isNotEmpty)
+                    AboutSection(
+                      aboutText: currentTeacher.bio,
+                      editMode: false,
+                      aboutController: TextEditingController(),
+                    ),
                   SizedBox(height: 20.h),
+                  if ((currentTeacher.experience ?? "").isNotEmpty)
+                    EditableInfoField(
+                        icon: Icons.work_history,
+                        title: "Deneyim",
+                        value: currentTeacher.experience ?? "",
+                        isEditing: false),
+                  if ((currentTeacher.location ?? "").isNotEmpty)
+                    EditableInfoField(
+                        icon: Icons.location_on,
+                        title: "Konum",
+                        value: currentTeacher.location ?? "",
+                        isEditing: false),
 
-                  Text(
-                    "Hakkında",
-                    style: Theme.of(context).textTheme.displayMedium,
-                  ),
-                  SizedBox(height: 5.h),
-                  Text(
-                    "Bu öğretmen hakkında uzun açıklama buraya gelecek... ",
-                    style: Theme.of(context).textTheme.bodyMedium,
-                    textAlign: TextAlign.start,
-                    softWrap: true,
-                    overflow: TextOverflow.visible,
-                  ),
-                  MyInfoCard(
-                    icon: Icons.school,
-                    title: "Eğitim",
-                    value: currentTeacher.education ?? " ",
-                  ),
-                  MyInfoCard(
-                    icon: Icons.work_history,
-                    title: "Deneyim",
-                    value: currentTeacher.experience ?? "",
-                  ),
-                  MyInfoCard(
-                    icon: Icons.location_on,
-                    title: "Konum",
-                    value: currentTeacher.location ?? "",
-                  ),
-                  MyInfoCard(
-                    icon: Icons.monetization_on,
-                    title: "Ders Ücreti",
-                    value: currentTeacher.price ?? "  ",
-                  ),
+                  if ((currentTeacher.education ?? "").isNotEmpty)
+                    EditableInfoField(
+                      icon: Icons.edit,
+                      title: "Eğitim",
+                      value: currentTeacher.education ?? "",
+                      isEditing: false,
+                    ),
+                  if ((currentTeacher.price ?? "").isNotEmpty)
+                    EditableInfoField(
+                        icon: Icons.monetization_on,
+                        title: "Ders Ücreti",
+                        value: currentTeacher.price ?? "  ",
+                        isEditing: false),
+
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16, vertical: 12),
@@ -138,21 +138,10 @@ class _TutorResumePageState extends State<TutorResumePage> {
                         Text("Müsaitlik Takvimi",
                             style: Theme.of(context).textTheme.displayMedium),
                         const SizedBox(height: 8),
-                        SizedBox(
-                          height: 50,
-                          child: ListView(
-                            scrollDirection: Axis.horizontal,
-                            children: [
-                              _dayChip("Pazartesi", true),
-                              _dayChip("Salı", false),
-                              _dayChip("Çarşamba", true),
-                              _dayChip("Perşembe", false),
-                              _dayChip("Cuma", true),
-                              _dayChip("Cumartesi", true),
-                              _dayChip("Pazar", false),
-                            ],
-                          ),
-                        ),
+                        DaySelector(
+                          currenTeacher: currentTeacher,
+                          editable: false,
+                        )
                       ],
                     ),
                   ),
@@ -176,27 +165,6 @@ class _TutorResumePageState extends State<TutorResumePage> {
               ),
             ),
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _dayChip(String day, bool available) {
-    return Container(
-      margin: const EdgeInsets.only(right: 8),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: BoxDecoration(
-        color: available
-            ? Theme.of(context).colorScheme.surface
-            : Colors.grey[300],
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Center(
-        child: Text(
-          day,
-          style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
         ),
       ),
     );
